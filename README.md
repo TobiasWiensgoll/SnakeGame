@@ -2,16 +2,13 @@
 
 ## Installieren und Starten:
 
-Installieren von dependencies.
-
+Installieren von dependencies.  
 `npm install`
 
-Starten vom Entwicklungs-Webserver.
-
+Starten vom Entwicklungs-Webserver.  
 `npm start`
 
-Seite im Browser aufrufen.
-
+Seite im Browser aufrufen.  
 `localhost:8080`
 
 ## Teammitglieder:
