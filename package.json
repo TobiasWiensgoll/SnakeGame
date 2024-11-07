@@ -1,0 +1,41 @@
+{
+  "name": "snake-game",
+  "version": "0.0.1",
+  "description": "A snake game with custom graphics and extra features",
+  "contributors": [
+    {
+      "name": "Leon Erwig"
+    },
+    {
+      "name": "Sebastian Dronov"
+    },
+    {
+      "name": "Alicia Tran"
+    },
+    {
+      "name": "Aleyna Yildirimhan"
+    },
+    {
+      "name": "Sergen Ertürk"
+    },
+    {
+      "name": "Tobias Wiensgoll"
+    }
+  ],
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel src/index.html -p 8080",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://projectbase.medien.hs-duesseldorf.de/webtec/ip2/snake.2024.gruppe2/snake.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "parcel-bundler": "^1.12.5",
+    "phaser": "^3.86.0",
+    "snake-game": "file:"
+  }
+}
