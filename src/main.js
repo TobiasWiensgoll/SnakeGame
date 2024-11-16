@@ -1,3 +1,4 @@
+import Game from './views/Game'
 import Phaser, { Physics } from 'phaser'
 
 const config = {
@@ -13,3 +14,6 @@ const config = {
 }
 
 const game = new Phaser.Game(config)
+
+game.scene.add('game', Game)
+game.scene.start('game')  
