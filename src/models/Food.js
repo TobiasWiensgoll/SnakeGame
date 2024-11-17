@@ -20,6 +20,4 @@ export default class Food {
         const position = this.field.getRandomPosition();
         this.food.setPosition(position.x, position.y);
     }
-
-  
 }
