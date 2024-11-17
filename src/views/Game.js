@@ -1,3 +1,4 @@
+import Food from '../models/Food.js'
 import Field from '../models/Field.js'
 import pngImages from '../assets/images/*.png';
 import jpgImages from '../assets/images/*.jpg'
@@ -10,20 +11,18 @@ export default class Game extends Phaser.Scene {
     }
 
     create(){
-        this.foodSprite = this.add.image(600,400,'apple02');
-        this.foodSprite.setScale(0.05)
-        this.foodSprite.setInteractive();
-
         this.field = new Field(this, this.scale.width, this.scale.height, 50)
         this.field.drawGrid()
-
         
+        
+
+        this.food = new Food(this, this.field);
     }
 
     update(){
-        const newPosition = this.field.getRandomPosition();
-        this.foodSprite.on('pointerdown', () => {
-            this.foodSprite.setPosition(newPosition.x, newPosition.y)
+        this.food.food.on('pointerdown', () => {
+            this.food.respawn()
+
         });
     }
 }
