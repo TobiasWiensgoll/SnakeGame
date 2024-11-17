@@ -1,3 +1,4 @@
+import Game from './views/Game'
 import Phaser, { Physics } from 'phaser'
 import Game from './views/Game'
 
