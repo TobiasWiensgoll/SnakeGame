@@ -1,38 +1,34 @@
 export default class SnakeModel {
-    constructor(scene, field) {
-      this.scene = scene;
-      this.field = field;
-      this.body = [];
-      this.directions = [];
-      this.positions = [];
-      this.moveTime = 0;
-      this.speed = 150
-      this.alive = true;
+  constructor(scene, field) {
+    this.scene = scene;
+    this.field = field;
+    this.body = [];
+    this.directions = [];
+    this.positions = [];
+    this.moveTime = 0;
+    this.speed = 150
+    this.alive = true;
+    this.direction = Phaser.Math.Vector2.UP;
+    this.directions.unshift(this.direction.clone());
+  }
   
-      this.direction = Phaser.Math.Vector2.UP;
-      this.directions.unshift(this.direction.clone());
+  // Die grow() Methode fügt der Schlange ein neues Segment am Ende hinzu,
+  // basierend auf der Richtung des letzten Segments. Es wird ein neues Sprite erstellt
+  // und zur Schlange hinzugefügt, wobei eine Kollision mit dem Kopf verhindert wird.
+  grow() {
+    let lastBodyPart = this.body[this.body.length - 1];
+    let lastDirection = this.directions[this.directions.length - 1];
   
-      this.snakeHead = this.scene.physics.add.sprite(this.scene.scale.width / 2, this.scene.scale.height / 2, "snakeUp");
-      this.body.push(this.snakeHead);
-    }
-    
-    // Die grow() Methode fügt der Schlange ein neues Segment am Ende hinzu,
-    // basierend auf der Richtung des letzten Segments. Es wird ein neues Sprite erstellt
-    // und zur Schlange hinzugefügt, wobei eine Kollision mit dem Kopf verhindert wird.
-    grow() {
-      let lastBodyPart = this.body[this.body.length - 1];
-      let lastDirection = this.directions[this.directions.length - 1];
-    
-      let newPart = this.scene.physics.add.sprite(
-        lastBodyPart.x - lastDirection.x * this.field.tileSize,
-        lastBodyPart.y - lastDirection.y * this.field.tileSize,
-      );
-    
-      this.body.push(newPart);
-      this.directions.push(lastDirection.clone());
-    
-      this.scene.physics.add.collider(this.snakeHead, newPart, this.endGame, null, this);
-    }
+    let newPart = this.scene.physics.add.sprite(
+      lastBodyPart.x - lastDirection.x * this.field.tileSize,
+      lastBodyPart.y - lastDirection.y * this.field.tileSize,
+    );
+  
+    this.body.push(newPart);
+    this.directions.push(lastDirection.clone());
+  
+    this.scene.physics.add.collider(this.snakeHead, newPart, this.endGame, null, this);
+  }
     
     // Bewegt den Schlangenkopf in die aktuelle Richtung und aktualisiert die Positionen der Körpersegmente,
     // sodass jedes Segment die Position des vorherigen übernimmt. Alle Positionen werden auf das Raster ausgerichtet.
@@ -42,6 +38,7 @@ export default class SnakeModel {
       let oldHeadPosition = { x: this.body[0].x, y: this.body[0].y };
       this.directions.unshift(this.direction.clone());
     
+      this.snakeHead = this.body[0];
       this.snakeHead.x += this.direction.x * this.field.tileSize;
       this.snakeHead.y += this.direction.y * this.field.tileSize;
     

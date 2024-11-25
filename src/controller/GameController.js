@@ -12,7 +12,6 @@ export default class GameController {
         this.snakeView = new SnakeView(scene, this.snakeModel);
         this.foodModel = new Food(scene, this.field);
         this.foodView = new FoodView(scene, this.foodModel);
-
         this.cursors = this.scene.input.keyboard.createCursorKeys();
     }
 
@@ -70,18 +69,18 @@ export default class GameController {
     update(time) {  
         this.handleInput();
         if (time >= this.snakeModel.moveTime && this.snakeModel.alive) {
-        let moved = this.snakeModel.move();
-        if (moved) {
-            if (this.checkSelfCollision()) {
-            this.endGame();
-            } else {
-            this.snakeView.updateBodyTextures();
-            this.checkSnakeFoodCollision();
-            this.checkWallCollision(this.snakeModel.snakeHead)
+            let moved = this.snakeModel.move();
+            if (moved) {
+                if (this.checkSelfCollision()) {
+                this.endGame();
+                } else {
+                this.snakeView.updateBodyTextures();
+                this.checkSnakeFoodCollision();
+                this.checkWallCollision(this.snakeModel.snakeHead)
+                }
+            } else if (!this.snakeModel.alive) {
+                this.endGame();
             }
-        } else if (!this.snakeModel.alive) {
-            this.endGame();
-        }
         }
     }
 }

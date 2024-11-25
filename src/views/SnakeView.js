@@ -2,7 +2,9 @@ export default class SnakeView {
     constructor(scene, snakeModel) {
       this.scene = scene;
       this.model = snakeModel;
-      this.tail = this.scene.physics.add.sprite(this.scene.scale.width / 2 - 40, this.scene.scale.height / 2, "tailDown")
+      this.snakeHead = this.scene.physics.add.sprite(this.scene.scale.width / 2, this.scene.scale.height / 2, "snakeUp");
+      this.model.body.push(this.snakeHead);
+      this.tail = this.scene.physics.add.sprite(this.scene.scale.width / 2 - this.model.field.tileSize, this.scene.scale.height / 2, "tailDown")
       this.model.body.push(this.tail);
       this.createAnimations();
     }

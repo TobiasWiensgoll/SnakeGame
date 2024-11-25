@@ -4,8 +4,6 @@ export default class Field {
         this.width = width;
         this.height = height;
         this.tileSize = tileSize;
-
-        // Berechne die Anzahl der Spalten und Zeilen
         this.cols = Math.floor(width / tileSize);
         this.rows = Math.floor(height / tileSize);
     }
