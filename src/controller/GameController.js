@@ -7,6 +7,10 @@ import FoodView from "../views/FoodView.js";
 export default class GameController {
   constructor(scene) {
     this.scene = scene;
+    let bg = this.scene.add.image(0, 0, "dungeon_background");
+    bg.displayWidth = this.scene.sys.canvas.width;
+    bg.displayHeight = this.scene.sys.canvas.height;
+    bg.setOrigin(0, 0);
     this.field = new Field(scene, scene.scale.width, scene.scale.height, 40);
     this.snakeModel = new SnakeModel(scene, this.field);
     this.snakeView = new SnakeView(scene, this.snakeModel);
