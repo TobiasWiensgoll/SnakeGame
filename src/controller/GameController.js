@@ -26,7 +26,7 @@ export default class GameController {
   // solange keine entgegengesetzte Richtung gewählt wurde (z.B. nicht nach links, wenn die Schlange nach rechts fährt).
   handleInput() {
     if (this.keyLock) return; // Input ignorieren, wenn Bewegung aktiv ist
-  
+
     const inputMap = {
       left: {
         key: this.cursors.left,
@@ -49,7 +49,7 @@ export default class GameController {
         opposite: -1,
       },
     };
-  
+
     for (const key in inputMap) {
       const input = inputMap[key];
       if (
@@ -62,7 +62,6 @@ export default class GameController {
       }
     }
   }
-  
 
   // checkSnakeFoodCollision() prüft, ob der Schlangenkopf die Nahrung berührt.
   // Wenn ja, wächst die Schlange und die Nahrung wird an einer neuen Position respawnt.
