@@ -1,0 +1,18 @@
+html,
+body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body {
+  background-image: url("/assets/images/WS_Hintergrundbild.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+canvas {
+  border: 2px solid #000;
+  display: block;
+}
