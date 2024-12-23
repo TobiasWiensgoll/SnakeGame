@@ -3,6 +3,7 @@ import pngImages from "../assets/images/*.png";
 import jpgImages from "../assets/images/*.jpg";
 import SnakePngImages from "../assets/snake/*.png";
 import Phaser from "phaser";
+import ObstacleModel from "../models/ObstacleModel.js";
 
 export default class Game extends Phaser.Scene {
   preload() {
@@ -22,10 +23,12 @@ export default class Game extends Phaser.Scene {
     this.load.image("tailUp", SnakePngImages.tail_up);
     this.load.image("tailDown", SnakePngImages.tail_down);
     this.load.image("dungeon_background", jpgImages.dungeon_background);
+    this.load.image("obstacle", pngImages.obstacle);
   }
 
   create() {
     this.controller = new GameController(this);
+    this.controller.drawAllObstacles();
   }
 
   update(time) {

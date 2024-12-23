@@ -3,6 +3,8 @@ import Food from "../models/FoodModel.js";
 import Field from "../models/Field.js";
 import SnakeView from "../views/SnakeView.js";
 import FoodView from "../views/FoodView.js";
+import ObstacleModel from "../models/ObstacleModel.js";
+import ObstacleView from "../views/ObstacleView";
 
 export default class GameController {
   constructor(scene) {
@@ -16,6 +18,8 @@ export default class GameController {
     this.snakeView = new SnakeView(scene, this.snakeModel);
     this.foodModel = new Food(scene, this.field);
     this.foodView = new FoodView(scene, this.foodModel);
+    this.obstacleModel = new ObstacleModel(scene, this.field);
+    this.obstacleView = new ObstacleView(scene);
     this.cursors = this.scene.input.keyboard.createCursorKeys();
 
     this.keyLock = false; // Sperrt Tasteneingaben, um schnelle Richtungswechsel zu verhindern
@@ -63,8 +67,29 @@ export default class GameController {
     }
   }
 
+  
   // checkSnakeFoodCollision() prüft, ob der Schlangenkopf die Nahrung berührt.
   // Wenn ja, wächst die Schlange und die Nahrung wird an einer neuen Position respawnt.
+  checkSnakeObstacleCollision() {
+    for (let obstacle of this.obstacleModel.obstacles) {
+      const snakeHeadPos = this.field.alignToGrid(
+        this.snakeModel.snakeHead.x,
+        this.snakeModel.snakeHead.y
+      );
+      const obstaclePos = this.field.alignToGrid(
+        obstacle.body.x, 
+        obstacle.body.y
+      );
+  
+      if (snakeHeadPos.x === obstaclePos.x && snakeHeadPos.y === obstaclePos.y) {
+        this.snakeModel.alive = false;
+        return true;
+      }
+    }
+    return false;
+  }
+  
+
   checkSnakeFoodCollision() {
     if (
       this.scene.physics.overlap(this.snakeModel.snakeHead, this.foodModel.food)
@@ -74,6 +99,12 @@ export default class GameController {
       return true;
     }
     return false;
+  }
+
+  drawAllObstacles(){
+    this.obstacleModel.createObstacles();
+    const obstacleData = this.obstacleModel.getObstacles();
+    this.obstacleView.drawAllObstacles(obstacleData)
   }
 
   // checkSelfCollision() prüft, ob der Schlangenkopf mit einem Körpersegment kollidiert.
@@ -124,6 +155,7 @@ export default class GameController {
         } else {
           this.snakeView.updateBodyTextures();
           this.checkSnakeFoodCollision();
+          this.checkSnakeObstacleCollision();
           this.checkWallCollision(this.snakeModel.snakeHead);
         }
       } else if (!this.snakeModel.alive) {
