@@ -1,5 +1,6 @@
 export default class ObstacleModel {
-    constructor() {
+    constructor(scene) {
+      this.scene = scene;
       this.obstacleData = []; // Speichert die Positionen und Typen der Hindernisse
     }
   

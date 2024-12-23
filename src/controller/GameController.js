@@ -71,23 +71,22 @@ export default class GameController {
   // checkSnakeFoodCollision() prüft, ob der Schlangenkopf die Nahrung berührt.
   // Wenn ja, wächst die Schlange und die Nahrung wird an einer neuen Position respawnt.
   checkSnakeObstacleCollision() {
-    for (let obstacle of this.obstacleModel.obstacles) {
-      const snakeHeadPos = this.field.alignToGrid(
+    const obstacles = this.obstacleModel.getObstacles();
+    const snakeHeadPos = this.field.alignToGrid(
         this.snakeModel.snakeHead.x,
         this.snakeModel.snakeHead.y
-      );
-      const obstaclePos = this.field.alignToGrid(
-        obstacle.body.x, 
-        obstacle.body.y
-      );
-  
-      if (snakeHeadPos.x === obstaclePos.x && snakeHeadPos.y === obstaclePos.y) {
-        this.snakeModel.alive = false;
-        return true;
-      }
+    );
+
+    for (const obstacle of obstacles) {
+        const obstaclePos = this.field.alignToGrid(obstacle.x, obstacle.y);
+
+        if (snakeHeadPos.x === obstaclePos.x && snakeHeadPos.y === obstaclePos.y) {
+            this.snakeModel.alive = false;
+            return true;
+        }
     }
     return false;
-  }
+}
   
 
   checkSnakeFoodCollision() {
