@@ -151,3 +151,9 @@ body {
   font-weight: bold;
   pointer-events: none; /* Text ist nicht klickbar */
 }
+
+.musicOff {
+  display: none;
+  position: relative;
+  left: -98px;
+}
