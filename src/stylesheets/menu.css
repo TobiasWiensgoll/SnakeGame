@@ -24,9 +24,38 @@ body {
   flex-direction: column; /* Elemente vertikal anordnen */
 }
 .roundButton {
+  position: relative;
   width: 8%;
   height: auto;
+  z-index: 20;
 }
+
+.dropDown {
+  display: inline;
+}
+.dropdownContent img {
+  width: 30%;
+  display: inline;
+  left: -96.5px;
+  position: relative;
+  z-index: 1;
+}
+.dropdownContent {
+  display: inline;
+  position: absolute;
+  display: none;
+}
+.dropbutton {
+  cursor: pointer;
+}
+.dropbutton:hover + .dropdownContent {
+  display: inline;
+}
+
+.dropdownContent:hover {
+  display: inline;
+}
+
 .TopButtonBar {
   margin-left: 2%;
   margin-top: 2%;
