@@ -16,7 +16,19 @@
             src="/src/assets/menus/button_Skin.png"
           />
           <div class="dropdownContent">
-            <img src="/src/assets/menus/dropdown.png" />
+            <img class="dropdownbg" src="/src/assets/menus/dropdown.png" />
+            <div class="dropflexbox">
+              <img
+                class="dropdownitem"
+                src="/src/assets/menus/button_Skin 1.png"
+                onclick="swapImages(this)"
+              />
+              <img
+                class="dropdownitem"
+                src="/src/assets/menus/button_Skin 2.png"
+                onclick="swapImages(this)"
+              />
+            </div>
           </div>
         </div>
 
@@ -55,5 +67,6 @@
       </div>
     </div>
     <script type="module" src="/src/models/HtmlModel.js"></script>
+    <script src="/src/menu.js"></script>
   </body>
 </html>

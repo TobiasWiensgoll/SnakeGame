@@ -33,12 +33,24 @@ body {
 .dropDown {
   display: inline;
 }
-.dropdownContent img {
+.dropdownContent .dropdownbg {
   width: 30%;
   display: inline;
   left: -96.5px;
   position: relative;
   z-index: 1;
+}
+.dropflexbox {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: -96.5px;
+  top: 90px;
+  z-index: 22;
+}
+.dropdownitem {
+  width: 30%;
+  height: auto;
 }
 .dropdownContent {
   display: inline;
