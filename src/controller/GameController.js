@@ -14,7 +14,7 @@ export default class GameController {
     this.field = new Field(scene, scene.scale.width, scene.scale.height, 40);
     this.snakeModel = new SnakeModel(scene, this.field);
     this.snakeView = new SnakeView(scene, this.snakeModel);
-    this.foodModel = new Food(scene, this.field);
+    this.foodModel = new Food(scene, this.field,this.snakeModel);
     this.foodView = new FoodView(scene, this.foodModel);
     this.cursors = this.scene.input.keyboard.createCursorKeys();
 
