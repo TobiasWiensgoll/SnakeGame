@@ -53,6 +53,12 @@ body {
   position: absolute;
   font-size: 3em;
 }
+.ScoreText {
+  display: block;
+  position: absolute;
+  top: 105px;
+  font-size: 3em;
+}
 .InsideContainer {
   position: relative;
   top: -20%;
@@ -87,7 +93,32 @@ body {
   top: -15px;
 }
 
-.StartButton,
-.LevelsButton {
+.StartButton {
   width: 45%;
+}
+
+.StartButton {
+  position: relative;
+  display: inline-block;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+}
+
+.StartButton img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px; /* Optional: abgerundete Ecken */
+}
+
+.StartButton span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  pointer-events: none; /* Text ist nicht klickbar */
 }
