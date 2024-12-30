@@ -34,8 +34,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "parcel-bundler": "^1.12.5",
     "phaser": "^3.86.0",
     "snake-game": "file:"
+  },
+  "devDependencies": {
+    "parcel": "^2.13.3",
+    "process": "^0.11.10"
   }
 }
