@@ -7,7 +7,69 @@
     <title>Snake</title>
 </head>
 <body>
-    
+    <!-- 1200x800 -->
+    <div class="MenuContainer">
+      <div class="TopButtonBar">
+        <div class="dropDown">
+          <img
+            class="roundButton dropbutton"
+            alt="standardSkin"
+            src="./assets/menus/button_Skin.png"
+          />
+          <div class="dropdownContent">
+            <img class="dropdownbg" src="./assets/menus/dropdown.png" />
+            <div class="dropflexbox">
+              <img
+                class="dropdownitem"
+                alt="Skin1"
+                src="./assets/menus/button_Skin 1.png"
+                onclick="swapImages(this)"
+              />
+              <img
+                class="dropdownitem"
+                alt="Skin2"
+                src="./assets/menus/button_Skin 2.png"
+                onclick="swapImages(this)"
+              />
+            </div>
+          </div>
+        </div>
+
+        <img class="roundButton" src="./assets/menus/button_musicOn.png" />
+        <img
+          class="roundButton musicOff"
+          src="./assets/menus/button_musicOff.png"
+        />
+      </div>
+      <div class="CrownBar">
+        <div class="crownContainer">
+          <img class="crown" src="./assets/menus/button_hauptmenue.png" />
+          <span class="crownText">HAUPTMENU</span>
+        </div>
+      </div>
+      <div class="InsideContainer">
+        <div class="statustext">DU BIST GESTORBEN :/</div>
+        <div class="crownContainer">
+          <img class="kronen" src="./assets/menus/banner_withCrown.png" />
+          <span class="ScoreText">35</span>
+        </div>
+        <div class="highScoretext">HIGHSCORE: 100</div>
+      </div>
+      <div class="BottomButtonContainer">
+        <button class="StartButton">
+          <img src="./assets/menus/button.png" />
+          <span>START</span>
+        </button>
+
+        <button class="StartButton">
+          <a href="level.html">
+            <img src="./assets/menus/button.png" />
+          </a>
+          <span>LEVEL</span>
+        </button>
+      </div>
+    </div>
     <script src="./main.js"></script>
+    <script src="./menu.js"></script>
 </body>
 </html>
