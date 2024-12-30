@@ -7,7 +7,7 @@ body {
   align-items: center;
 }
 body {
-  background-image: url("/assets/images/WS_Hintergrundbild.jpg");
+  background-image: url("../assets/images/WS_Hintergrundbild.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
