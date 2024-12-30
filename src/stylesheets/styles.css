@@ -17,3 +17,162 @@ canvas {
   display: block;
 }
 
+/* Für menu */
+
+.MenuContainer {
+  position: absolute;
+  width: 1200px;
+  height: 800px;
+  /* background-color: azure; */
+  background-color: rgba(240, 255, 255, 60%);
+  /* opacity: 60%; */
+  border-radius: 16px;
+  display: flex; /* Aktiviert Flexbox */
+  flex-direction: column; /* Elemente vertikal anordnen */
+}
+.roundButton {
+  position: relative;
+  width: 8%;
+  height: auto;
+  z-index: 20;
+}
+
+.dropDown {
+  display: inline;
+}
+.dropdownContent .dropdownbg {
+  width: 30%;
+  display: inline;
+  left: -96.5px;
+  position: relative;
+  z-index: 1;
+}
+.dropflexbox {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: -96.5px;
+  top: 90px;
+  z-index: 22;
+}
+.dropdownitem {
+  width: 30%;
+  height: auto;
+}
+.dropdownContent {
+  display: inline;
+  position: absolute;
+  display: none;
+}
+.dropbutton {
+  cursor: pointer;
+}
+.dropbutton:hover + .dropdownContent {
+  display: inline;
+}
+
+.dropdownContent:hover {
+  display: inline;
+}
+
+.TopButtonBar {
+  margin-left: 2%;
+  margin-top: 2%;
+}
+
+.CrownBar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -228px;
+}
+.crown {
+  width: 50%;
+}
+.crownContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.crownText {
+  display: block;
+  position: absolute;
+  font-size: 3em;
+}
+.ScoreText {
+  display: block;
+  position: absolute;
+  top: 105px;
+  font-size: 3em;
+}
+.InsideContainer {
+  position: relative;
+  top: -20%;
+  display: flex; /* Aktiviert Flexbox */
+  flex-direction: column; /* Elemente vertikal anordnen */
+  align-items: center; /* Zentriert die Items horizontal */
+  justify-content: center; /* Optional: Zentriert die Items vertikal (falls nötig) */
+  height: 100%; /* Optional: Container kann volle Höhe einnehmen */
+  gap: 50px; /* Abstand zwischen den Items */
+}
+
+.statustext {
+  font-size: 4em; /* Schriftgröße anpassen */
+}
+
+.kronen {
+  width: 50%; /* Breite der Krone */
+  height: auto; /* Automatische Höhe beibehalten */
+  margin-bottom: 10px;
+}
+
+.highScoretext {
+  font-size: 1.5em; /* Schriftgröße anpassen */
+  margin-top: -80px;
+}
+
+.BottomButtonContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -15px;
+}
+
+.StartButton {
+  width: 45%;
+}
+
+.StartButton {
+  position: relative;
+  display: inline-block;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+}
+
+.StartButton img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px; /* Optional: abgerundete Ecken */
+}
+
+.StartButton span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  pointer-events: none; /* Text ist nicht klickbar */
+}
+
+.musicOff {
+  display: none;
+  position: relative;
+  left: -98px;
+}
