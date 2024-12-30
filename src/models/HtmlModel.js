@@ -4,6 +4,7 @@ export default class HtmlModel {
     this.statusText = statusText; // Der Text, der in der statustext div angezeigt wird
     this.kronen = kronen; // Der Wert der Kronen, der in der ScoreText span angezeigt wird
     this.skins = [];
+    this.selectedSkin;
     this.level;
   }
 
