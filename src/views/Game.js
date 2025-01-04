@@ -27,6 +27,22 @@ import tailLeft from "../assets/snake/tail_left.png";
 import tailUp from "../assets/snake/tail_up.png";
 import tailDown from "../assets/snake/tail_down.png";
 
+//für Haku Skin
+import headRighth from "../assets/snake/haku/head_right.png";
+import headLefth from "../assets/snake/haku/head_left.png";
+import headUph from "../assets/snake/haku/head_up.png";
+import headDownh from "../assets/snake/haku/head_down.png";
+import bodyHorizontalh from "../assets/snake/haku/body_horizontal.png";
+import bodyVerticalh from "../assets/snake/haku/body_vertical.png";
+import bodyRightUph from "../assets/snake/haku/body_rightup.png";
+import bodyRightDownh from "../assets/snake/haku/body_rightdown.png";
+import bodyDownRighth from "../assets/snake/haku/body_downright.png";
+import bodyUpRighth from "../assets/snake/haku/body_upright.png";
+import tailRighth from "../assets/snake/haku/tail_right.png";
+import tailLefth from "../assets/snake/haku/tail_left.png";
+import tailUph from "../assets/snake/haku/tail_up.png";
+import tailDownh from "../assets/snake/haku/tail_down.png";
+
 // Powerup-Bilder importieren
 import fireballImage from "../assets/images/powerups/fire.png";
 import potionImage from "../assets/images/powerups/potion.png";
@@ -38,6 +54,12 @@ import potionImage from "../assets/images/powerups/potion.png";
 import Phaser from "phaser";
 
 export default class Game extends Phaser.Scene {
+  constructor(levelId, skinId) {
+    super("game");
+    this.levelId = levelId;
+    this.skinId = skinId;
+  }
+
   preload() {
     // Lade alle Bilder
     this.load.image("apple", appleImage);
@@ -51,20 +73,38 @@ export default class Game extends Phaser.Scene {
     this.load.image("fire", fireImage);
 
     // Snake-Bilder laden
-    this.load.image("snakeRight", headRight);
-    this.load.image("snakeLeft", headLeft);
-    this.load.image("snakeUp", headUp);
-    this.load.image("snakeDown", headDown);
-    this.load.image("bodyHorizontal", bodyHorizontal);
-    this.load.image("bodyVertical", bodyVertical);
-    this.load.image("bodyRightUp", bodyRightUp);
-    this.load.image("bodyRightDown", bodyRightDown);
-    this.load.image("bodyDownRight", bodyDownRight);
-    this.load.image("bodyUpRight", bodyUpRight);
-    this.load.image("tailRight", tailRight);
-    this.load.image("tailLeft", tailLeft);
-    this.load.image("tailUp", tailUp);
-    this.load.image("tailDown", tailDown);
+    if (this.skinId === 1) {
+      this.load.image("snakeRight", headRight);
+      this.load.image("snakeLeft", headLeft);
+      this.load.image("snakeUp", headUp);
+      this.load.image("snakeDown", headDown);
+      this.load.image("bodyHorizontal", bodyHorizontal);
+      this.load.image("bodyVertical", bodyVertical);
+      this.load.image("bodyRightUp", bodyRightUp);
+      this.load.image("bodyRightDown", bodyRightDown);
+      this.load.image("bodyDownRight", bodyDownRight);
+      this.load.image("bodyUpRight", bodyUpRight);
+      this.load.image("tailRight", tailRight);
+      this.load.image("tailLeft", tailLeft);
+      this.load.image("tailUp", tailUp);
+      this.load.image("tailDown", tailDown);
+    }
+    if (this.skinId === 2) {
+      this.load.image("snakeRight", headRighth);
+      this.load.image("snakeLeft", headLefth);
+      this.load.image("snakeUp", headUph);
+      this.load.image("snakeDown", headDownh);
+      this.load.image("bodyHorizontal", bodyHorizontalh);
+      this.load.image("bodyVertical", bodyVerticalh);
+      this.load.image("bodyRightUp", bodyRightUph);
+      this.load.image("bodyRightDown", bodyRightDownh);
+      this.load.image("bodyDownRight", bodyDownRighth);
+      this.load.image("bodyUpRight", bodyUpRighth);
+      this.load.image("tailRight", tailRighth);
+      this.load.image("tailLeft", tailLefth);
+      this.load.image("tailUp", tailUph);
+      this.load.image("tailDown", tailDownh);
+    }
 
     // Powerup-Bilder laden
     this.load.image("fireball", fireballImage);
