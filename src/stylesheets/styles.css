@@ -176,3 +176,80 @@ canvas {
   position: relative;
   left: -98px;
 }
+
+/* Für Level Menu */
+.MenuContainer2 {
+  position: absolute;
+  width: 1200px;
+  height: 800px;
+  /* background-color: azure; */
+  background-color: rgba(240, 255, 255, 60%);
+  /* opacity: 60%; */
+  border-radius: 16px;
+  display: flex; /* Aktiviert Flexbox */
+  flex-direction: column; /* Elemente vertikal anordnen */
+}
+.level {
+  width: 300px;
+  height: 400px;
+  border-radius: 16px;
+}
+.level1 {
+  background-image: url(/src/assets/images/dungeon_background.jpg);
+  background-size: 250%;
+}
+.level2 {
+  background-image: url(/src/assets/images/Forest.png);
+  background-size: 150%;
+}
+.level3 {
+  background-image: url(/src/assets/images/dungeon\ 1.png);
+  background-size: 150%;
+}
+.level + p,
+.level + p + p {
+  text-align: center;
+}
+
+.backButton {
+  width: 10%;
+  position: relative;
+  top: 30px;
+  margin-left: 60vw;
+}
+
+.CrownBar2 {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -110px;
+}
+.crown2 {
+  width: 50%;
+}
+.crownContainer2 {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.crownText2 {
+  display: block;
+  position: absolute;
+  font-size: 3em;
+}
+
+.InsideContainer2 {
+  position: relative;
+  top: -10%;
+  display: flex; /* Aktiviert Flexbox */
+  flex-direction: row; /* Elemente vertikal anordnen */
+  align-items: center; /* Zentriert die Items horizontal */
+  justify-content: center; /* Optional: Zentriert die Items vertikal (falls nötig) */
+  height: 100%; /* Optional: Container kann volle Höhe einnehmen */
+  gap: 50px; /* Abstand zwischen den Items */
+}
+.MenuContainer {
+  display: none;
+}

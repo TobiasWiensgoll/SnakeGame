@@ -13,7 +13,7 @@ body {
   background-repeat: no-repeat;
 }
 
-.MenuContainer {
+.MenuContainer2 {
   width: 1200px;
   height: 800px;
   /* background-color: azure; */
@@ -24,29 +24,29 @@ body {
   flex-direction: column; /* Elemente vertikal anordnen */
 }
 
-.CrownBar {
+.CrownBar2 {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   top: -110px;
 }
-.crown {
+.crown2{
   width: 50%;
 }
-.crownContainer {
+.crownContainer2 {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.crownText {
+.crownText2 {
   display: block;
   position: absolute;
   font-size: 3em;
 }
 
-.InsideContainer {
+.InsideContainer2 {
   position: relative;
   top: -10%;
   display: flex; /* Aktiviert Flexbox */
