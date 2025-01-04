@@ -23,3 +23,30 @@ function swapImages(clickedItem) {
     console.error('Kein Element mit der Klasse "dropButton" gefunden.');
   }
 }
+function toggleMenus() {
+  const menuContainer = document.querySelector(".MenuContainer");
+  const menuContainer2 = document.querySelector(".MenuContainer2");
+
+  if (menuContainer && menuContainer2) {
+    // Level Button Event Listener
+    const levelButton = document.getElementById("levelButton");
+    if (levelButton) {
+      levelButton.addEventListener("click", () => {
+        menuContainer.style.display = "none";
+        menuContainer2.style.display = "flex";
+      });
+    }
+
+    // Back Button Event Listener
+    const backButton = document.getElementById("backButton");
+    if (backButton) {
+      backButton.addEventListener("click", () => {
+        menuContainer.style.display = "flex";
+        menuContainer2.style.display = "none";
+      });
+    }
+  }
+}
+
+// Stellt sicher, dass die Funktion nach dem Laden des DOMs ausgeführt wird
+document.addEventListener("DOMContentLoaded", toggleMenus);
