@@ -3,9 +3,13 @@ export default class HtmlModel {
   constructor(statusText, kronen) {
     this.statusText = statusText; // Der Text, der in der statustext div angezeigt wird
     this.kronen = kronen; // Der Wert der Kronen, der in der ScoreText span angezeigt wird
-    this.skins = [];
-    this.selectedSkin;
-    this.level;
+    this.skinId = 1;
+    this.levelId = 1;
+    this.initialise();
+  }
+
+  initialise() {
+    this.updateText();
   }
 
   // Gibt den Status-Text zurück
@@ -16,6 +20,17 @@ export default class HtmlModel {
   // Gibt die Anzahl der Kronen zurück
   setKronen() {
     return this.kronen;
+  }
+
+  setLevelid(levelId) {
+    this.levelid = levelId;
+  }
+
+  getSkinId(skinId) {
+    let altText = document.querySelector(".dropbutton");
+    const altTextAsInt = parseInt(altText.alt, 10);
+    this.skinId = altTextAsInt;
+    return this.skinId;
   }
 
   // Aktualisiert den Text der statustext und der Kronen (ScoreText)
@@ -43,9 +58,3 @@ export default class HtmlModel {
     }
   }
 }
-//!gehört in den Controllr
-// Wird ausgeführt, wenn die Seite vollständig geladen ist
-window.onload = function () {
-  let HtmlModels = new HtmlModel("Willkommen zurück!", 15); // Beispiel: Status-Text "Willkommen zurück!" und 35 Kronen
-  HtmlModels.updateText(); // Ändert den Text in der 'statustext'-Klasse und die Kronenanzeige
-};
