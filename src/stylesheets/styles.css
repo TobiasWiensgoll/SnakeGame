@@ -250,6 +250,9 @@ canvas {
   height: 100%; /* Optional: Container kann volle Höhe einnehmen */
   gap: 50px; /* Abstand zwischen den Items */
 }
+.MenuContainer2 {
+  display: none;
+}
 .MenuContainer {
   display: none;
 }

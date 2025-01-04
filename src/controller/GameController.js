@@ -3,6 +3,15 @@ import Food from "../models/FoodModel.js";
 import Field from "../models/Field.js";
 import SnakeView from "../views/SnakeView.js";
 import FoodView from "../views/FoodView.js";
+import ObstacleModel from "../models/ObstacleModel.js";
+import ObstacleView from "../views/ObstacleView";
+import HelmetItem from "../models/Helmet.js";
+import SpeedUp from "../models/SpeedUp.js"
+import Multiplikator from "../models/Multiplikator.js";
+import MysteryBox from "../models/Mysterybox.js";
+import Freeze from "../models/Freeze.js";
+import FireItem from "../models/Fire.js";
+import PotionItem from "../models/Potion.js";
 
 export default class GameController {
   constructor(scene) {
@@ -14,10 +23,21 @@ export default class GameController {
     this.field = new Field(scene, scene.scale.width, scene.scale.height, 40);
     this.snakeModel = new SnakeModel(scene, this.field);
     this.snakeView = new SnakeView(scene, this.snakeModel);
-    this.foodModel = new Food(scene, this.field,this.snakeModel);
+    this.foodModel = new Food(scene, this.field);
     this.foodView = new FoodView(scene, this.foodModel);
+    this.obstacleModel = new ObstacleModel(scene, this.field);
+    this.obstacleView = new ObstacleView(scene);
+    this.mysteryBox = new MysteryBox(scene, this.field);
+    this.fireItem = new FireItem(scene, this.field);
+    this.potionItem = new PotionItem(scene, this.field);
+    this.freeze = new Freeze (scene, this.field);
+    this.speedup = new SpeedUp(scene,this.field);
+    this.helmetItem = new HelmetItem(scene, this.field);
+    this.multiplikator = new Multiplikator(scene, this.field);
     this.cursors = this.scene.input.keyboard.createCursorKeys();
-
+    
+  
+    this.disableCollisions = false; // Flag zum Deaktivieren der Kollisionen
     this.keyLock = false; // Sperrt Tasteneingaben, um schnelle Richtungswechsel zu verhindern
     this.moveEvents = []; // Sammlung von Eingaben für Bewegungen
   }
@@ -61,10 +81,43 @@ export default class GameController {
         break;
       }
     }
+    if (this.cursors.space.isDown) {
+      this.fireItem.shootFireBall(this.snakeModel);
+    }
   }
 
-  // checkSnakeFoodCollision() prüft, ob der Schlangenkopf die Nahrung berührt.
+  
+   // checkSnakeFoodCollision() prüft, ob der Schlangenkopf die Nahrung berührt.
   // Wenn ja, wächst die Schlange und die Nahrung wird an einer neuen Position respawnt.
+  checkSnakeObstacleCollision() {
+    if(!this.disableCollisions){
+      const obstacles = this.obstacleModel.getObstacles();
+      const snakeHeadPos = this.field.alignToGrid(
+          this.snakeModel.snakeHead.x,
+          this.snakeModel.snakeHead.y
+      );
+
+      for (const obstacle of obstacles) {
+          const obstaclePos = this.field.alignToGrid(obstacle.x, obstacle.y);
+
+          if (snakeHeadPos.x === obstaclePos.x && snakeHeadPos.y === obstaclePos.y) {
+              if (this.snakeModel.lives > 1) {
+                  this.snakeModel.loseLife();
+                  this.obstacleModel.removeObstacle(obstacle.x, obstacle.y);
+                  this.obstacleView.removeObstacle(obstacle.x, obstacle.y);
+              } else {
+                  this.snakeModel.loseLife();
+                  if (!this.snakeModel.alive) {
+                      this.endGame();
+                  }
+              }
+              return true;
+          }
+      }
+    }
+    return false;
+  }
+  
   checkSnakeFoodCollision() {
     if (
       this.scene.physics.overlap(this.snakeModel.snakeHead, this.foodModel.food)
@@ -76,15 +129,23 @@ export default class GameController {
     return false;
   }
 
+  drawAllObstacles(){
+    this.obstacleModel.createObstacles();
+    const obstacleData = this.obstacleModel.getObstacles();
+    this.obstacleView.drawAllObstacles(obstacleData)
+  }
+
   // checkSelfCollision() prüft, ob der Schlangenkopf mit einem Körpersegment kollidiert.
   // Falls eine Kollision festgestellt wird, wird die Schlange als tot markiert.
   checkSelfCollision() {
-    for (let i = 1; i < this.snakeModel.body.length; i++) {
-      if (
-        this.snakeModel.snakeHead.x === this.snakeModel.body[i].x &&
-        this.snakeModel.snakeHead.y === this.snakeModel.body[i].y
-      ) {
-        this.snakeModel.alive = false;
+    if(!this.disableCollisions){
+      for (let i = 1; i < this.snakeModel.body.length; i++) {
+        if (
+          this.snakeModel.snakeHead.x === this.snakeModel.body[i].x &&
+          this.snakeModel.snakeHead.y === this.snakeModel.body[i].y
+        ) {
+          this.snakeModel.alive = false;
+        }
       }
     }
   }
@@ -102,9 +163,109 @@ export default class GameController {
     }
   }
 
+  checkSnakePotionCollision() {
+    if (
+      this.scene.physics.overlap(this.snakeModel.snakeHead, this.potionItem.sprite)
+    ) {
+      this.potionItem.onCollision(this.snakeModel);
+      this.disableCollisions = true;
+      this.scene.time.delayedCall(5000, () => {
+        this.disableCollisions = false;
+      });
+      this.potionItem.spawn(); // Respawn des Helm-Items
+      return true;
+    }
+    return false;
+  }
+
+  checkSnakeFireCollision() {
+    if (
+      this.scene.physics.overlap(this.snakeModel.snakeHead, this.fireItem.sprite)
+    ) {
+      this.fireItem.onCollision(this.snakeModel);
+      return true;
+    }
+    return false;
+  }
+
+  checkFireBallObstacleCollision() {  
+    if (this.fireItem.fireBall) {
+      const obstacles = this.obstacleModel.getObstacles();
+      const fireBallPos = this.field.alignToGrid(
+        this.fireItem.fireBall.x,
+        this.fireItem.fireBall.y
+      );
+      for (const obstacle of obstacles) {
+        const obstaclePos = this.field.alignToGrid(obstacle.x, obstacle.y);
+        if (fireBallPos.x === obstaclePos.x && fireBallPos.y === obstaclePos.y) {
+          this.obstacleModel.removeObstacle(obstacle.x, obstacle.y);
+          this.obstacleView.removeObstacle(obstacle.x, obstacle.y);
+          break;
+        }
+      }
+    }
+  }
+  checkSnakeFreezeCollision() {
+    if (
+      this.scene.physics.overlap(this.snakeModel.snakeHead, this.freeze.sprite)
+    ) {
+      this.freeze.onCollision(this.snakeModel);
+      this.freeze.spawn(); // Respawn des Freeze-Items
+      return true;
+    }
+    return false;
+  }
+
+  checkSnakeHelmetCollision() {
+    if (
+      this.scene.physics.overlap(this.snakeModel.snakeHead, this.helmetItem.sprite)
+    ) {
+      this.helmetItem.onCollision(this.snakeModel);
+      this.helmetItem.spawn(); // Respawn des Helm-Items
+      return true;
+    }
+    return false;
+  }
+
+
+  checkSnakeSpeedUpCollision() {
+    if (
+      this.scene.physics.overlap(this.snakeModel.snakeHead, this.speedup.sprite)
+    ) {
+      this.speedup.onCollision(this.snakeModel);
+      this.speedup.spawn(); // Respawn des SpeedUp-Items
+      return true;
+    }
+    return false;
+  }
+
+
+  checkSnakeMultiplikatorCollision() {
+    if (
+      this.scene.physics.overlap(this.snakeModel.snakeHead, this.multiplikator.sprite)
+    ) {
+      this.multiplikator.onCollision(this.snakeModel);
+      this.multiplikator.spawn(); // Respawn des Multiplikator-Items
+      return true;
+    }
+    return false;
+  }
+
+
+  checkSnakeMysteryBoxCollision() {
+    if (
+      this.scene.physics.overlap(this.snakeModel.snakeHead, this.mysteryBox.sprite)
+    ) {
+      this.mysteryBox.onCollision(this.snakeModel);
+      this.mysteryBox.spawn(); // Respawn des mysterybox-Items
+      return true;
+    }
+    return false;
+  }
+
   // endGame() markiert die Schlange als tot
   endGame() {
-    this.alive = false;
+    this.snakeModel.alive = false;
   }
 
   // update() wird in jedem Frame aufgerufen, um die Eingaben zu verarbeiten, die Schlange zu bewegen
@@ -124,7 +285,17 @@ export default class GameController {
         } else {
           this.snakeView.updateBodyTextures();
           this.checkSnakeFoodCollision();
+          this.checkSnakeObstacleCollision();
           this.checkWallCollision(this.snakeModel.snakeHead);
+          this.checkSnakeHelmetCollision();
+          this.checkSnakeSpeedUpCollision();
+          this.checkSnakeMultiplikatorCollision();
+          this.checkSnakeFreezeCollision();
+          this.checkSnakeMysteryBoxCollision();
+         this.checkSnakeFireCollision();
+         this.checkSnakePotionCollision();
+          this.checkFireBallObstacleCollision();
+      
         }
       } else if (!this.snakeModel.alive) {
         this.endGame();

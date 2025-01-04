@@ -3,7 +3,7 @@ export default class Food {
     this.scene = scene;
     this.field = field;
     const position = this.field.getRandomPosition();
-    this.food = this.scene.physics.add.image(position.x, position.y, "apple");
+    this.food = this.scene.physics.add.image(position.x, position.y, "food");
   }
 
   // respawn() platziert das Essen an einer zufälligen Position auf dem Spielfeld.
