@@ -5,46 +5,75 @@ import SnakeView from "../views/SnakeView.js";
 import FoodView from "../views/FoodView.js";
 import ObstacleModel from "../models/ObstacleModel.js";
 import ObstacleView from "../views/ObstacleView";
-import HelmetItem from "../models/Helmet.js";
-import SpeedUp from "../models/SpeedUp.js";
-import Multiplikator from "../models/Multiplikator.js";
-import MysteryBox from "../models/Mysterybox.js";
-import Freeze from "../models/Freeze.js";
-import FireItem from "../models/Fire.js";
-import PotionItem from "../models/Potion.js";
+
+import HelmetItem from "../models/items/Helmet.js";
+import SpeedUp from "../models/items/SpeedUp.js";
+import Multiplikator from "../models/items/Multiplikator.js";
+import MysteryBox from "../models/items/Mysterybox.js";
+import Freeze from "../models/items/Freeze.js";
+import FireItem from "../models/items/Fire.js";
+import PotionItem from "../models/items/Potion.js";
+
+import ItemDisplayView from "../views/ItemDisplayView.js"
+
 import HtmlController from "./HtmlController.js";
 
 export default class GameController {
   constructor(scene) {
+
+    // Szene und Spielfeld erstellen
     this.scene = scene;
     let bg = this.scene.add.image(0, 0, "dungeon_background");
     bg.displayWidth = this.scene.sys.canvas.width;
     bg.displayHeight = this.scene.sys.canvas.height;
     bg.setOrigin(0, 0);
     this.field = new Field(scene, scene.scale.width, scene.scale.height, 40);
+
+    // Schlange erstellen
     this.snakeModel = new SnakeModel(scene, this.field);
     this.snakeView = new SnakeView(scene, this.snakeModel);
+
+    // Food-Model und -View erstellen
     this.foodModel = new Food(scene, this.field);
     this.foodView = new FoodView(scene, this.foodModel);
+
+    // Obstacle-Model und -View erstellen
     this.obstacleModel = new ObstacleModel(scene, this.field);
     this.obstacleView = new ObstacleView(scene);
+
+    // Items erstellen (zu Testzwecken)
+    this.activeItems = [];
     this.mysteryBox = new MysteryBox(scene, this.field);
+    this.mysteryBox.spawn();
     this.fireItem = new FireItem(scene, this.field);
     this.potionItem = new PotionItem(scene, this.field);
     this.freeze = new Freeze(scene, this.field);
     this.speedup = new SpeedUp(scene, this.field);
     this.helmetItem = new HelmetItem(scene, this.field);
     this.multiplikator = new Multiplikator(scene, this.field);
+    this.activeFireball = null;
+
+    this.itemDisplayView = new ItemDisplayView(scene);
+
+    // Inputs erstellen
     this.cursors = this.scene.input.keyboard.createCursorKeys();
     this.HtmlController = new HtmlController();
 
+    // Flags erstellen
     this.disableCollisions = false; // Flag zum Deaktivieren der Kollisionen
+
+    // Bewegung Setup
     this.keyLock = false; // Sperrt Tasteneingaben, um schnelle Richtungswechsel zu verhindern
     this.moveEvents = []; // Sammlung von Eingaben für Bewegungen
   }
 
-  // handleInput() überprüft die Tasten-Eingaben des Spielers und ändert die Bewegungsrichtung der Schlange,
-  // solange keine entgegengesetzte Richtung gewählt wurde (z.B. nicht nach links, wenn die Schlange nach rechts fährt).
+
+
+  /**
+   * handleInput() überprüft die Tasten-Eingaben des Spielers und ändert die Bewegungsrichtung der Schlange,
+   * solange keine entgegengesetzte Richtung gewählt wurde (z.B. nicht nach links, wenn die Schlange nach rechts fährt).
+   * @returns 
+   */
   handleInput() {
     if (this.keyLock) return; // Input ignorieren, wenn Bewegung aktiv ist
 
@@ -83,12 +112,20 @@ export default class GameController {
       }
     }
     if (this.cursors.space.isDown) {
-      this.fireItem.shootFireBall(this.snakeModel);
+      if(this.activeItems[0]){
+        console.log(this.activeItems[0]);
+        this.activeItems[0].onAction(this.snakeModel);
+        this.removeItemFromDisplay();
+      }
+      
     }
   }
 
-  // checkSnakeFoodCollision() prüft, ob der Schlangenkopf die Nahrung berührt.
-  // Wenn ja, wächst die Schlange und die Nahrung wird an einer neuen Position respawnt.
+  /**
+   * checkSnakeFoodCollision() prüft, ob der Schlangenkopf die Nahrung berührt.
+   * Wenn ja, wächst die Schlange und die Nahrung wird an einer neuen Position respawnt.
+   * @returns 
+   */
   checkSnakeObstacleCollision() {
     if (!this.disableCollisions) {
       const obstacles = this.obstacleModel.getObstacles();
@@ -138,8 +175,10 @@ export default class GameController {
     this.obstacleView.drawAllObstacles(obstacleData);
   }
 
-  // checkSelfCollision() prüft, ob der Schlangenkopf mit einem Körpersegment kollidiert.
-  // Falls eine Kollision festgestellt wird, wird die Schlange als tot markiert.
+  /**
+   * checkSelfCollision() prüft, ob der Schlangenkopf mit einem Körpersegment kollidiert.
+   * Falls eine Kollision festgestellt wird, wird die Schlange als tot markiert.
+   */
   checkSelfCollision() {
     if (!this.disableCollisions) {
       for (let i = 1; i < this.snakeModel.body.length; i++) {
@@ -154,8 +193,11 @@ export default class GameController {
     }
   }
 
-  // checkWallCollision() überprüft, ob der Schlangenkopf das Spielfeld verlässt.
-  // Falls der Kopf den Rand des Spielfelds überschreitet, wird die Schlange als tot markiert.
+  /**
+   * checkWallCollision() überprüft, ob der Schlangenkopf das Spielfeld verlässt.
+   * Falls der Kopf den Rand des Spielfelds überschreitet, wird die Schlange als tot markiert.
+   * @param {*} snakeHead 
+   */
   checkWallCollision(snakeHead) {
     if (
       snakeHead.x > this.scene.game.config.width ||
@@ -168,6 +210,7 @@ export default class GameController {
     }
   }
 
+  // *********************************** ITEMS COLLISIONS ***********************************
   checkSnakePotionCollision() {
     if (
       this.scene.physics.overlap(
@@ -200,11 +243,21 @@ export default class GameController {
   }
 
   checkFireBallObstacleCollision() {
-    if (this.fireItem.fireBall) {
+    if (this.activeFireball) {
+      console.log("active");
+      if (
+        this.activeFireball.sprite.x > this.scene.game.config.width ||
+        this.activeFireball.sprite.x < 0 ||
+        this.activeFireball.y > this.scene.game.config.height ||
+        this.activeFireball.y < 0
+      ) {
+        this.activeFireball.stopFireBall();
+        return;
+      }
       const obstacles = this.obstacleModel.getObstacles();
       const fireBallPos = this.field.alignToGrid(
-        this.fireItem.fireBall.x,
-        this.fireItem.fireBall.y
+        this.activeFireball.x,
+        this.activeFireball.y
       );
       for (const obstacle of obstacles) {
         const obstaclePos = this.field.alignToGrid(obstacle.x, obstacle.y);
@@ -214,9 +267,11 @@ export default class GameController {
         ) {
           this.obstacleModel.removeObstacle(obstacle.x, obstacle.y);
           this.obstacleView.removeObstacle(obstacle.x, obstacle.y);
-          break;
+          this.activeFireball.stopFireBall();
+          return;
         }
       }
+      
     }
   }
   checkSnakeFreezeCollision() {
@@ -276,23 +331,28 @@ export default class GameController {
         this.mysteryBox.sprite
       )
     ) {
-      this.mysteryBox.onCollision(this.snakeModel);
-      this.mysteryBox.spawn(); // Respawn des mysterybox-Items
+      this.addItemToDisplay(this.mysteryBox.onCollision(this.snakeModel));
       return true;
     }
     return false;
   }
+  // ****************************************************************************************
 
-  // endGame() markiert die Schlange als tot
+  /**
+   * endGame() markiert die Schlange als tot
+   */
   endGame() {
     console.log("Endgame");
     this.snakeModel.alive = false;
     this.HtmlController.handleDeath();
   }
 
-  // update() wird in jedem Frame aufgerufen, um die Eingaben zu verarbeiten, die Schlange zu bewegen
-  // und Kollisionen zu überprüfen. Wenn die Schlange sich bewegt, werden Kollisionen mit sich selbst,
-  // dem Essen und den Wänden geprüft. Bei einer Kollision endet das Spiel.
+  /**
+   * update() wird in jedem Frame aufgerufen, um die Eingaben zu verarbeiten, die Schlange zu bewegen
+   * und Kollisionen zu überprüfen. Wenn die Schlange sich bewegt, werden Kollisionen mit sich selbst,
+   * dem Essen und den Wänden geprüft. Bei einer Kollision endet das Spiel.
+   * @param {*} time 
+   */
   update(time) {
     this.handleInput();
     if (time >= this.snakeModel.moveTime && this.snakeModel.alive) {
@@ -322,5 +382,15 @@ export default class GameController {
         this.endGame();
       }
     }
+  }
+
+  addItemToDisplay(item) {
+    this.activeItems.push(item);
+    this.itemDisplayView.addItem(item);
+  }
+
+  removeItemFromDisplay() {
+    this.activeItems.shift();
+    this.itemDisplayView.removeItem(1);
   }
 }
