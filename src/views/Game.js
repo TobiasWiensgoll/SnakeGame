@@ -43,11 +43,27 @@ import tailLefth from "../assets/snake/haku/tail_left.png";
 import tailUph from "../assets/snake/haku/tail_up.png";
 import tailDownh from "../assets/snake/haku/tail_down.png";
 
+//für Pink Skin
+import headRightp from "../assets/snake/pink/head_right.png";
+import headLeftp from "../assets/snake/pink/head_left.png";
+import headUpp from "../assets/snake/pink/head_up.png";
+import headDownp from "../assets/snake/pink/head_down.png";
+import bodyHorizontalp from "../assets/snake/pink/body_horizontal.png";
+import bodyVerticalp from "../assets/snake/pink/body_vertical.png";
+import bodyRightUpp from "../assets/snake/pink/body_rightup.png";
+import bodyRightDownp from "../assets/snake/pink/body_rightdown.png";
+import bodyDownRightp from "../assets/snake/pink/body_downright.png";
+import bodyUpRightp from "../assets/snake/pink/body_upright.png";
+import tailRightp from "../assets/snake/pink/tail_right.png";
+import tailLeftp from "../assets/snake/pink/tail_left.png";
+import tailUpp from "../assets/snake/pink/tail_up.png";
+import tailDownp from "../assets/snake/pink/tail_down.png";
+
 // Powerup-Bilder importieren
 import fireballImage from "../assets/images/powerups/fire.png";
 import potionImage from "../assets/images/powerups/potion.png";
 
-// // Handicap-Bilder importieren
+// Handicap-Bilder importieren
 // import handicapFireImage from "../assets/images/handicaps/fire.png";
 // import handicapPotionImage from "../assets/images/handicaps/potion.png";
 
@@ -104,6 +120,22 @@ export default class Game extends Phaser.Scene {
       this.load.image("tailLeft", tailLefth);
       this.load.image("tailUp", tailUph);
       this.load.image("tailDown", tailDownh);
+    }
+    if (this.skinId === 3) {
+      this.load.image("snakeRight", headRightp);
+      this.load.image("snakeLeft", headLeftp);
+      this.load.image("snakeUp", headUpp);
+      this.load.image("snakeDown", headDownp);
+      this.load.image("bodyHorizontal", bodyHorizontalp);
+      this.load.image("bodyVertical", bodyVerticalp);
+      this.load.image("bodyRightUp", bodyRightUpp);
+      this.load.image("bodyRightDown", bodyRightDownp);
+      this.load.image("bodyDownRight", bodyDownRightp);
+      this.load.image("bodyUpRight", bodyUpRightp);
+      this.load.image("tailRight", tailRightp);
+      this.load.image("tailLeft", tailLeftp);
+      this.load.image("tailUp", tailUpp);
+      this.load.image("tailDown", tailDownp);
     }
 
     // Powerup-Bilder laden
