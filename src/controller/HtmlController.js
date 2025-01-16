@@ -54,6 +54,7 @@ export default class HtmlController {
   }
 
   showMenus() {
+    this.htmlModel.updateText();
     const menuContainer = document.querySelector(".MenuContainer");
 
     menuContainer.style.display = "flex";
@@ -61,6 +62,7 @@ export default class HtmlController {
 
   handleDeath() {
     console.log("handledeath");
+    this.htmlModel.changeStatusText("Du bist gestorben :/");
     this.showMenus();
   }
 }

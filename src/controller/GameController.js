@@ -39,7 +39,7 @@ export default class GameController {
     this.helmetItem = new HelmetItem(scene, this.field);
     this.multiplikator = new Multiplikator(scene, this.field);
     this.cursors = this.scene.input.keyboard.createCursorKeys();
-    this.HtmlModel = new HtmlModel(0,"Wilkommen")
+    this.HtmlModel = new HtmlModel("Wilkommen", 0);
     this.HtmlController = new HtmlController(this.HtmlModel);
 
     this.disableCollisions = false; // Flag zum Deaktivieren der Kollisionen
@@ -302,6 +302,8 @@ export default class GameController {
   endGame() {
     console.log("Endgame");
     this.snakeModel.alive = false;
+    console.log("getscore " + this.snakeModel.getScore());
+    this.HtmlModel.setKronen(this.snakeModel.getScore());
     this.HtmlController.handleDeath();
   }
 

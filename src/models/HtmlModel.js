@@ -1,3 +1,4 @@
+let globalHighScore = 0;
 // HtmlModel.js
 export default class HtmlModel {
   constructor(statusText, kronen) {
@@ -6,6 +7,7 @@ export default class HtmlModel {
     this.skinId = 1;
     this.levelId = 1;
     this.initialise();
+    this.highscore = globalHighScore;
   }
 
   initialise() {
@@ -14,11 +16,29 @@ export default class HtmlModel {
 
   // Gibt den Status-Text zurück
   setStatustext() {
+    console.log("statustext" + this.statusText);
     return this.statusText;
   }
 
+  changeStatusText(text) {
+    this.statusText = text;
+  }
+
   // Gibt die Anzahl der Kronen zurück
-  setKronen() {
+  setKronen(kronen) {
+    this.kronen = kronen;
+    console.log("Set Kronen: " + this.kronen);
+
+    if (this.kronen > this.highscore) {
+      this.highscore = this.kronen;
+      globalHighScore = this.highscore;
+      console.log("Neuer Highscore: " + this.highscore);
+    } else {
+      console.log("Highscore bleibt unverändert: " + this.highscore);
+    }
+  }
+
+  getKronen() {
     return this.kronen;
   }
 
@@ -36,6 +56,10 @@ export default class HtmlModel {
     const altTextAsInt = parseInt(altText.alt, 10);
     this.skinId = altTextAsInt;
     return this.skinId;
+  }
+
+  getHighScore() {
+    return this.highscore;
   }
 
   // Aktualisiert den Text der statustext und der Kronen (ScoreText)
@@ -57,9 +81,18 @@ export default class HtmlModel {
 
     // Überprüfen, ob das Element existiert, bevor wir die Kronenanzahl setzen
     if (outputScoreText) {
-      outputScoreText.textContent = this.setKronen(); // Setzt die Kronenanzahl
+      outputScoreText.textContent = this.getKronen(); // Setzt die Kronenanzahl
     } else {
       console.error('Element mit der Klasse "ScoreText" wurde nicht gefunden.');
+    }
+
+    const highScoreText = document.querySelector(".highScoretext");
+    if (highScoreText) {
+      highScoreText.textContent = "Highscore: " + this.getHighScore();
+    } else {
+      console.error(
+        'Element mit der Klasse "highScoretext" wurde nicht gefunden.'
+      );
     }
   }
 }
