@@ -13,6 +13,7 @@ import Freeze from "../models/Freeze.js";
 import FireItem from "../models/Fire.js";
 import PotionItem from "../models/Potion.js";
 import HtmlController from "./HtmlController.js";
+import HtmlModel from "../models/HtmlModel.js";
 
 export default class GameController {
   constructor(scene, levelId) {
@@ -38,7 +39,8 @@ export default class GameController {
     this.helmetItem = new HelmetItem(scene, this.field);
     this.multiplikator = new Multiplikator(scene, this.field);
     this.cursors = this.scene.input.keyboard.createCursorKeys();
-    this.HtmlController = new HtmlController();
+    this.HtmlModel = new HtmlModel(0,"Wilkommen")
+    this.HtmlController = new HtmlController(this.HtmlModel);
 
     this.disableCollisions = false; // Flag zum Deaktivieren der Kollisionen
     this.keyLock = false; // Sperrt Tasteneingaben, um schnelle Richtungswechsel zu verhindern

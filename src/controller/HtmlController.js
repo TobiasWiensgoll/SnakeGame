@@ -2,8 +2,8 @@ import { startGame } from "../main.js";
 
 export default class HtmlController {
   constructor(HtmlModel) {
-    this.initListeners();
     this.htmlModel = HtmlModel;
+    this.initListeners();
   }
   initListeners() {
     // Beispiel: Button mit ID "startButton" startet das Spiel
