@@ -22,11 +22,16 @@ export default class HtmlModel {
     return this.kronen;
   }
 
-  setLevelid(levelId) {
-    this.levelid = levelId;
+  setLevelId(levelId) {
+    this.levelId = levelId;
+    console.log("Ich setze die levelid auf" + this.levelId);
   }
 
-  getSkinId(skinId) {
+  getLevelId() {
+    return this.levelId;
+  }
+
+  getSkinId() {
     let altText = document.querySelector(".dropbutton");
     const altTextAsInt = parseInt(altText.alt, 10);
     this.skinId = altTextAsInt;

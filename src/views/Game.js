@@ -148,7 +148,7 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
-    this.controller = new GameController(this);
+    this.controller = new GameController(this, this.levelId);
   }
 
   update(time) {

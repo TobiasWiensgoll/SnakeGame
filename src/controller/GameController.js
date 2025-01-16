@@ -15,8 +15,10 @@ import PotionItem from "../models/Potion.js";
 import HtmlController from "./HtmlController.js";
 
 export default class GameController {
-  constructor(scene) {
+  constructor(scene, levelId) {
     this.scene = scene;
+    this.levelId = levelId;
+    this.initialize(levelId);
     let bg = this.scene.add.image(0, 0, "dungeon_background");
     bg.displayWidth = this.scene.sys.canvas.width;
     bg.displayHeight = this.scene.sys.canvas.height;
@@ -43,6 +45,17 @@ export default class GameController {
     this.moveEvents = []; // Sammlung von Eingaben für Bewegungen
   }
 
+  initialize(levelId) {
+    if (levelId === 1) {
+      console.log("Level 1 ");
+    }
+    if (levelId === 2) {
+      console.log("Level 2 ");
+    }
+    if (levelId === 3) {
+      console.log("Level 3 ");
+    }
+  }
   // handleInput() überprüft die Tasten-Eingaben des Spielers und ändert die Bewegungsrichtung der Schlange,
   // solange keine entgegengesetzte Richtung gewählt wurde (z.B. nicht nach links, wenn die Schlange nach rechts fährt).
   handleInput() {
