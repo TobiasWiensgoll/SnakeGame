@@ -47,6 +47,44 @@ function toggleMenus() {
     }
   }
 }
+// Referenzen zu den Elementen
+const musicToggleOff = document.getElementById("musicToggle"); // Music-Off-Button
+const musicToggleOn = document.querySelector(".musicOn"); // Music-On-Bild
+const backgroundMusic = document.getElementById("backgroundMusic"); // Audio-Element
+
+// Initialer Zustand: Musik aus
+let isMusicOn = false;
+
+// Anfangszustand: Music-On-Bild verstecken
+// musicToggleOn.style.display = "none";
+
+// Event-Listener für den Music-Off-Button
+musicToggleOff.addEventListener("click", () => {
+  if (!isMusicOn) {
+    // Musik einschalten
+    backgroundMusic.play();
+
+    // Bilder entsprechend umschalten
+    // musicToggleOff.style.display = "none"; // Music-Off-Bild verstecken
+    musicToggleOn.style.display = "inline"; // Music-On-Bild anzeigen
+
+    isMusicOn = true;
+  }
+});
+
+// Event-Listener für den Music-On-Button
+musicToggleOn.addEventListener("click", () => {
+  if (isMusicOn) {
+    // Musik ausschalten
+    backgroundMusic.pause();
+
+    // Bilder entsprechend umschalten
+    musicToggleOn.style.display = "none"; // Music-On-Bild verstecken
+    // musicToggleOff.style.display = "inline"; // Music-Off-Bild anzeigen
+
+    isMusicOn = false;
+  }
+});
 
 // Stellt sicher, dass die Funktion nach dem Laden des DOMs ausgeführt wird
 document.addEventListener("DOMContentLoaded", toggleMenus);

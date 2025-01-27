@@ -168,4 +168,5 @@ body {
   display: none;
   position: relative;
   left: -98px;
+  z-index: din
 }
