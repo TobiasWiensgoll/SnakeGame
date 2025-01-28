@@ -3,7 +3,6 @@ import Item from './Item.js';
 export default class FireItem extends Item {
   constructor(scene, field) {
     super(scene, field, 'fireball'); // 'fireball' ist der Schlüssel für das Feuerball-Sprite
-    this.scene = scene;
   }
 
 

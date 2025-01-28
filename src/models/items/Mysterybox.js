@@ -6,11 +6,12 @@ import HelmetItem from './Helmet';
 import Freeze from './Freeze';
 import FireItem from './Fire';
 import PotionItem from './Potion';
+import TorchItem from './Torch';
 
 export default class MysteryBox extends Item {
   constructor(scene, field) {
     super(scene, field, 'mysteryBox');
-    this.items = [FireItem]; // Liste von möglichen Power-ups
+    this.items = [TorchItem]; // Liste von möglichen Power-ups
     this.item = null;
   }
 
@@ -20,7 +21,7 @@ export default class MysteryBox extends Item {
     this.item = new randomItemClass(this.scene, this.field);
 
     // Erstelle das Power-up und gebe es der Schlange
-    // this.item.onCollision(snake);
+    this.item.onAction(snake);
     // Konsolenausgabe des Power-ups, das durch die MysteryBox gegeben wurde
     console.log(`MysteryBox-Item wurde eingesammelt! Das ausgewählte Power-up ist: ${this.item.constructor.name}`);
 
