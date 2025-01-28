@@ -233,7 +233,7 @@ export default class GameController {
       )
     ) {
       console.log(this.activeItems.length);
-      this.addItemToDisplay(this.mysteryBox.onCollision(this.snakeModel, this.activeItems.length >= 1));
+      this.addItemToDisplay(this.mysteryBox.onCollision(this.snakeModel, this.activeItems.length >= 4));
     }
     return false;
   }
