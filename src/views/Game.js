@@ -1,10 +1,23 @@
 import GameController from "../controller/GameController.js";
 
+<<<<<<< HEAD
 // Food / Obstacles importieren
 import dungeonBackgroundImage from "../assets/images/dungeon_background.jpg";
 import obstacleBrickImage from "../assets/images/obstacle_brick.png";
 import appleImage from "../assets/images/apple.png";
 import foodImage from "../assets/images/food.png";
+=======
+// Manuelle Imports für die Bilder
+import appleImage from "../assets/images/apple.png";
+import foodImage from "../assets/images/food.png";
+import dungeonBackgroundImage from "../assets/images/dungeon_background.jpg";
+import obstacleBrickImage from "../assets/images/obstacle_brick.png";
+import helmetImage from "../assets/images/helmet.png";
+import speedImage from "../assets/images/speed.png";
+import multiplikatorImage from "../assets/images/multiplikator_.png";
+import mysteryBoxImage from "../assets/images/mysteryBox.png";
+import fireImage from "../assets/images/fire_.png";
+>>>>>>> d632b1de3b1a083fdc2dc35d5791d0a1b89205cb
 
 // Snake-Bilder importieren
 import headRight from "../assets/snake/head_right.png";
@@ -22,7 +35,11 @@ import tailLeft from "../assets/snake/tail_left.png";
 import tailUp from "../assets/snake/tail_up.png";
 import tailDown from "../assets/snake/tail_down.png";
 
+<<<<<<< HEAD
 // Haku Skin importieren
+=======
+//für Haku Skin
+>>>>>>> d632b1de3b1a083fdc2dc35d5791d0a1b89205cb
 import headRighth from "../assets/snake/haku/head_right.png";
 import headLefth from "../assets/snake/haku/head_left.png";
 import headUph from "../assets/snake/haku/head_up.png";
@@ -38,6 +55,7 @@ import tailLefth from "../assets/snake/haku/tail_left.png";
 import tailUph from "../assets/snake/haku/tail_up.png";
 import tailDownh from "../assets/snake/haku/tail_down.png";
 
+<<<<<<< HEAD
 // Mysterybox-Bild importieren
 import mysteryBoxImg from '../assets/images/items/mysteryBox.png'
 // Handicap-Bilder importieren
@@ -52,6 +70,15 @@ import freezeImg from "../assets/images/items/powerups/multiplikator.png";
 import helmetImg from "../assets/images/items/powerups/helmet.png";
 import multiplikatorImg from "../assets/images/items/powerups/multiplikator.png";
 import potionImg from "../assets/images/items/powerups/potion.png";
+=======
+// Powerup-Bilder importieren
+import fireballImage from "../assets/images/powerups/fire.png";
+import potionImage from "../assets/images/powerups/potion.png";
+
+// // Handicap-Bilder importieren
+// import handicapFireImage from "../assets/images/handicaps/fire.png";
+// import handicapPotionImage from "../assets/images/handicaps/potion.png";
+>>>>>>> d632b1de3b1a083fdc2dc35d5791d0a1b89205cb
 
 import Phaser from "phaser";
 
@@ -63,13 +90,27 @@ export default class Game extends Phaser.Scene {
   }
 
   preload() {
+<<<<<<< HEAD
     // ****************************** Food / Obstacles ******************************
+=======
+    // Lade alle Bilder
+>>>>>>> d632b1de3b1a083fdc2dc35d5791d0a1b89205cb
     this.load.image("apple", appleImage);
     this.load.image("food", foodImage);
     this.load.image("dungeon_background", dungeonBackgroundImage);
     this.load.image("obstacle_brick", obstacleBrickImage);
+<<<<<<< HEAD
 
     // ****************************** Snake-Bilder ******************************
+=======
+    this.load.image("helmet", helmetImage);
+    this.load.image("speedup", speedImage);
+    this.load.image("multiplikator", multiplikatorImage);
+    this.load.image("mysteryBox", mysteryBoxImage);
+    this.load.image("fire", fireImage);
+
+    // Snake-Bilder laden
+>>>>>>> d632b1de3b1a083fdc2dc35d5791d0a1b89205cb
     if (this.skinId === 1) {
       this.load.image("snakeRight", headRight);
       this.load.image("snakeLeft", headLeft);
@@ -103,6 +144,7 @@ export default class Game extends Phaser.Scene {
       this.load.image("tailDown", tailDownh);
     }
 
+<<<<<<< HEAD
     // ****************************** Item-Bilder ******************************
     this.load.image("mysteryBox", mysteryBoxImg);
     // Powerup-Bilder
@@ -117,6 +159,15 @@ export default class Game extends Phaser.Scene {
     this.load.image("growth", growthImg);
     this.load.image("reverse", reverseImg);
     this.load.image("speedup", speedImg);
+=======
+    // Powerup-Bilder laden
+    this.load.image("fireball", fireballImage);
+    this.load.image("potion", potionImage);
+
+    // Handicap-Bilder laden
+    // this.load.image("handicapFire", handicapFireImage);
+    // this.load.image("handicapPotion", handicapPotionImage);
+>>>>>>> d632b1de3b1a083fdc2dc35d5791d0a1b89205cb
   }
 
   create() {
