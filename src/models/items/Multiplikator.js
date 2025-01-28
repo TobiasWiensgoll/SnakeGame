@@ -2,20 +2,24 @@ import Item from './Item.js';
 
 export default class Multiplikator extends Item {
   constructor(scene, field) {
-    super(scene, field, 'multiplikator'); // 'multiplier' ist der Schlüssel für das Power-up-Sprite
+    super(scene, field, 'multiplikator', 'powerup'); // 'multiplier' ist der Schlüssel für das Multiplier-Sprite
   }
 
-  onCollision(snake) {
-    // Angenommen, die Schlange hat eine Methode, die den Punktestand verdoppelt
+  /**
+   * Aktiviert den Punktmultiplikator für 15 Sekunden
+   * 
+   * @param {*} snake 
+   */
+  onAction(snake) {
+    this.createItemAnimation();
     if (snake.doublePoints) {
-      snake.doublePoints(true); // Aktiviert den Punktmultiplikator
+      snake.doublePoints(true); 
       this.scene.time.addEvent({
         delay: 15000, // Dauer des Punktmultiplikators in Millisekunden (15 Sekunden)
         callback: () => {
-          snake.doublePoints(false); // Deaktiviert den Punktmultiplikator nach 15 Sekunden
+          snake.doublePoints(false); 
         },
       });
     }
-    this.destroy(); // Zerstört das Power-up-Item nach der Kollision
   }
 }

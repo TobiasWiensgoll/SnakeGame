@@ -42,13 +42,14 @@ import tailDownh from "../assets/snake/haku/tail_down.png";
 import mysteryBoxImg from '../assets/images/items/mysteryBox.png'
 // Handicap-Bilder importieren
 import flashlightImg from '../assets/images/items/handicaps/flashlight.png';
+import lightMaskImg from '../assets/images/light_mask.png';
 import growthImg from '../assets/images/items/handicaps/growth.png';
 import reverseImg from "../assets/images/items/handicaps/reverse.png";
 import speedImg from "../assets/images/items/handicaps/speed.png";
 // Powerup-Bilder importieren
 import fireImg from "../assets/images/items/powerups/fire.png";
 import fireBallImg from "../assets/images/items/powerups/fireBall.png";
-import freezeImg from "../assets/images/items/powerups/multiplikator.png";
+import freezeImg from "../assets/images/items/powerups/freeze.png";
 import helmetImg from "../assets/images/items/powerups/helmet.png";
 import multiplikatorImg from "../assets/images/items/powerups/multiplikator.png";
 import potionImg from "../assets/images/items/powerups/potion.png";
@@ -114,6 +115,7 @@ export default class Game extends Phaser.Scene {
     this.load.image("potion", potionImg);
     // Handicap-Bilder laden
     this.load.image("flashlight", flashlightImg);
+    this.load.image("lightMask", lightMaskImg);
     this.load.image("growth", growthImg);
     this.load.image("reverse", reverseImg);
     this.load.image("speedup", speedImg);

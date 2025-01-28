@@ -2,18 +2,21 @@ import Item from './Item.js';
 
 export default class FireItem extends Item {
   constructor(scene, field) {
-    super(scene, field, 'fireball'); // 'fireball' ist der Schlüssel für das Feuerball-Sprite
+    super(scene, field, 'fireball', 'powerup'); // 'fireball' ist der Schlüssel für das Feuerball-Sprite
   }
 
 
   /**
-   * schießt einen Feuerball in der Bewegungsrichtung des Schlangenkopfs
-   * und ändert activeFireball im Gamecontroller auf den Feuerball
+   * erstellt und schießt einen Feuerball in der Bewegungsrichtung des Schlangenkopfs
+   * und ändert activeFireball im Gamecontroller auf den Feuerball,
+   * sodass die Kollisionserkennung für den Feuerball funktioniert
    * 
    * @param {*} snake 
    * @returns 
    */
   onAction(snake) {
+    this.createItemAnimation();
+    
     this.x = snake.snakeHead.x;
     this.y = snake.snakeHead.y;
     this.createSprite();
@@ -34,8 +37,8 @@ export default class FireItem extends Item {
    * Gamecontroller auf null
    */
   stopFireBall() {
-    this.sprite.setActive(false).setVisible(false); // Deaktiviert den Feuerball
-    this.sprite.setVelocity(0, 0); // Setzt die Geschwindigkeit auf 0
+    this.sprite.setActive(false).setVisible(false);
+    this.sprite.setVelocity(0, 0);
     this.scene.controller.activeFireball = null;
   }
 

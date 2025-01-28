@@ -2,13 +2,20 @@ import Item from './Item.js';
 
 export default class PotionItem extends Item {
   constructor(scene, field) {
-    super(scene, field, 'potion'); // 'fire' ist der Schlüssel für das Feuer-Sprite
+    super(scene, field, 'potion', 'powerup'); // 'potion' ist der Schlüssel für das Potion-Sprite
   }
 
-  onCollision(snake) {
-    
-    // Zerstört das Item, da es jetzt aktiv genutzt wird
-    this.destroy();
+  /**
+   * Deaktiviert die Kollisionen für 5 Sek
+   * 
+   * @param {*} snake 
+   */
+  onAction(snake) {
+    this.createItemAnimation();
+    this.scene.controller.disableCollisions = true;
+    this.scene.time.delayedCall(5000, () => {
+      this.scene.controller.disableCollisions = false;
+    });
   }
 
   
