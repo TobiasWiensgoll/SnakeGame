@@ -1,15 +1,10 @@
 import GameController from "../controller/GameController.js";
 
-// Manuelle Imports für die Bilder
-import appleImage from "../assets/images/apple.png";
-import foodImage from "../assets/images/food.png";
+// Food / Obstacles importieren
 import dungeonBackgroundImage from "../assets/images/dungeon_background.jpg";
 import obstacleBrickImage from "../assets/images/obstacle_brick.png";
-import helmetImage from "../assets/images/helmet.png";
-import speedImage from "../assets/images/speed.png";
-import multiplikatorImage from "../assets/images/multiplikator_.png";
-import mysteryBoxImage from "../assets/images/mysteryBox.png";
-import fireImage from "../assets/images/fire_.png";
+import appleImage from "../assets/images/apple.png";
+import foodImage from "../assets/images/food.png";
 
 // Snake-Bilder importieren
 import headRight from "../assets/snake/head_right.png";
@@ -27,7 +22,7 @@ import tailLeft from "../assets/snake/tail_left.png";
 import tailUp from "../assets/snake/tail_up.png";
 import tailDown from "../assets/snake/tail_down.png";
 
-//für Haku Skin
+// Haku Skin importieren
 import headRighth from "../assets/snake/haku/head_right.png";
 import headLefth from "../assets/snake/haku/head_left.png";
 import headUph from "../assets/snake/haku/head_up.png";
@@ -43,7 +38,7 @@ import tailLefth from "../assets/snake/haku/tail_left.png";
 import tailUph from "../assets/snake/haku/tail_up.png";
 import tailDownh from "../assets/snake/haku/tail_down.png";
 
-//für Pink Skin
+// Pink Skin importieren
 import headRightp from "../assets/snake/pink/head_right.png";
 import headLeftp from "../assets/snake/pink/head_left.png";
 import headUpp from "../assets/snake/pink/head_up.png";
@@ -59,13 +54,21 @@ import tailLeftp from "../assets/snake/pink/tail_left.png";
 import tailUpp from "../assets/snake/pink/tail_up.png";
 import tailDownp from "../assets/snake/pink/tail_down.png";
 
-// Powerup-Bilder importieren
-import fireballImage from "../assets/images/powerups/fire.png";
-import potionImage from "../assets/images/powerups/potion.png";
-
+// Mysterybox-Bild importieren
+import mysteryBoxImg from '../assets/images/items/mysteryBox.png'
 // Handicap-Bilder importieren
-// import handicapFireImage from "../assets/images/handicaps/fire.png";
-// import handicapPotionImage from "../assets/images/handicaps/potion.png";
+import flashlightImg from '../assets/images/items/handicaps/flashlight.png';
+import lightMaskImg from '../assets/images/light_mask.png';
+import growthImg from '../assets/images/items/handicaps/growth.png';
+import reverseImg from "../assets/images/items/handicaps/reverse.png";
+import speedImg from "../assets/images/items/handicaps/speed.png";
+// Powerup-Bilder importieren
+import fireImg from "../assets/images/items/powerups/fire.png";
+import fireBallImg from "../assets/images/items/powerups/fireBall.png";
+import freezeImg from "../assets/images/items/powerups/freeze.png";
+import helmetImg from "../assets/images/items/powerups/helmet.png";
+import multiplikatorImg from "../assets/images/items/powerups/multiplikator.png";
+import potionImg from "../assets/images/items/powerups/potion.png";
 
 import Phaser from "phaser";
 
@@ -77,18 +80,13 @@ export default class Game extends Phaser.Scene {
   }
 
   preload() {
-    // Lade alle Bilder
+    // ****************************** Food / Obstacles ******************************
     this.load.image("apple", appleImage);
     this.load.image("food", foodImage);
     this.load.image("dungeon_background", dungeonBackgroundImage);
     this.load.image("obstacle_brick", obstacleBrickImage);
-    this.load.image("helmet", helmetImage);
-    this.load.image("speedup", speedImage);
-    this.load.image("multiplikator", multiplikatorImage);
-    this.load.image("mysteryBox", mysteryBoxImage);
-    this.load.image("fire", fireImage);
 
-    // Snake-Bilder laden
+    // ****************************** Snake-Bilder ******************************
     if (this.skinId === 1) {
       this.load.image("snakeRight", headRight);
       this.load.image("snakeLeft", headLeft);
@@ -121,30 +119,22 @@ export default class Game extends Phaser.Scene {
       this.load.image("tailUp", tailUph);
       this.load.image("tailDown", tailDownh);
     }
-    if (this.skinId === 3) {
-      this.load.image("snakeRight", headRightp);
-      this.load.image("snakeLeft", headLeftp);
-      this.load.image("snakeUp", headUpp);
-      this.load.image("snakeDown", headDownp);
-      this.load.image("bodyHorizontal", bodyHorizontalp);
-      this.load.image("bodyVertical", bodyVerticalp);
-      this.load.image("bodyRightUp", bodyRightUpp);
-      this.load.image("bodyRightDown", bodyRightDownp);
-      this.load.image("bodyDownRight", bodyDownRightp);
-      this.load.image("bodyUpRight", bodyUpRightp);
-      this.load.image("tailRight", tailRightp);
-      this.load.image("tailLeft", tailLeftp);
-      this.load.image("tailUp", tailUpp);
-      this.load.image("tailDown", tailDownp);
-    }
 
-    // Powerup-Bilder laden
-    this.load.image("fireball", fireballImage);
-    this.load.image("potion", potionImage);
-
+    // ****************************** Item-Bilder ******************************
+    this.load.image("mysteryBox", mysteryBoxImg);
+    // Powerup-Bilder
+    this.load.image("fire", fireImg);
+    this.load.image("fireball", fireBallImg);
+    this.load.image("freeze", freezeImg);
+    this.load.image("helmet", helmetImg);
+    this.load.image("multiplikator", multiplikatorImg);
+    this.load.image("potion", potionImg);
     // Handicap-Bilder laden
-    // this.load.image("handicapFire", handicapFireImage);
-    // this.load.image("handicapPotion", handicapPotionImage);
+    this.load.image("flashlight", flashlightImg);
+    this.load.image("lightMask", lightMaskImg);
+    this.load.image("growth", growthImg);
+    this.load.image("reverse", reverseImg);
+    this.load.image("speedup", speedImg);
   }
 
   create() {

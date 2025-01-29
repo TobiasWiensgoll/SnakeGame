@@ -2,14 +2,16 @@ import Item from './Item';
 
 export default class Freeze extends Item {
   constructor(scene, field) {
-    super(scene, field, 'freeze'); // Der Typ für das Freeze-Item ist 'freeze'
+    super(scene, field, 'freeze', 'powerup'); // 'freeze' ist der Schlüssel für das Freeze-Sprite
   }
 
-  // Überschreibt die onCollision Methode für das Freeze-Item
-  onCollision(snake) {
-    // Logik für das Einfrieren der Schlange
-    console.log("Freeze-Item wurde eingesammelt! Schlange eingefroren.");
-
+  /**
+   * friert die Schlange für 3 Sekunden ein
+   * 
+   * @param {*} snake 
+   */
+  onAction(snake) {
+    this.createItemAnimation();
     // Schlange einfrieren
     snake.freeze();
 
@@ -22,8 +24,5 @@ export default class Freeze extends Item {
       },
       loop: false,
     });
-
-    // Zerstöre das Freeze-Item
-    this.destroy();
   }
 }
