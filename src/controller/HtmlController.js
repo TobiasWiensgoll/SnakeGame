@@ -2,8 +2,8 @@ import { startGame } from "../main.js";
 
 export default class HtmlController {
   constructor(HtmlModel) {
-    this.initListeners();
     this.htmlModel = HtmlModel;
+    this.initListeners();
   }
   initListeners() {
     // Beispiel: Button mit ID "startButton" startet das Spiel
@@ -13,13 +13,36 @@ export default class HtmlController {
         this.startGameHandler();
       });
     }
+    const level1Button = document.querySelector(".level1");
+    const level2Button = document.querySelector(".level2");
+    const level3Button = document.querySelector(".level3");
+
+    if (level1Button) {
+      level1Button.addEventListener("click", () => {
+        this.htmlModel.setLevelId(1);
+        this.startGameHandler();
+      });
+    }
+    if (level2Button) {
+      level2Button.addEventListener("click", () => {
+        this.htmlModel.setLevelId(2);
+        this.startGameHandler();
+      });
+    }
+    if (level3Button) {
+      level3Button.addEventListener("click", () => {
+        this.htmlModel.setLevelId(3);
+
+        this.startGameHandler();
+      });
+    }
   }
 
   startGameHandler() {
     console.log("Spiel wird gestartet...");
     this.hideMenus();
     console.log(this.htmlModel.getSkinId());
-    startGame(1, this.htmlModel.getSkinId()); // Hier wird die Methode aus gameStarter.js aufgerufen
+    startGame(this.htmlModel.getLevelId(), this.htmlModel.getSkinId()); // Hier wird die Methode aus gameStarter.js aufgerufen
   }
 
   hideMenus() {
@@ -31,6 +54,7 @@ export default class HtmlController {
   }
 
   showMenus() {
+    this.htmlModel.updateText();
     const menuContainer = document.querySelector(".MenuContainer");
 
     menuContainer.style.display = "flex";
@@ -38,6 +62,7 @@ export default class HtmlController {
 
   handleDeath() {
     console.log("handledeath");
+    this.htmlModel.changeStatusText("Du bist gestorben :/");
     this.showMenus();
   }
 }

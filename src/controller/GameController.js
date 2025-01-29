@@ -11,12 +11,15 @@ import MysteryBox from "../models/items/Mysterybox.js";
 import ItemDisplayView from "../views/ItemDisplayView.js"
 
 import HtmlController from "./HtmlController.js";
+import HtmlModel from "../models/HtmlModel.js";
 
 export default class GameController {
-  constructor(scene) {
+  constructor(scene, levelId) {
 
     // Szene und Spielfeld erstellen
     this.scene = scene;
+    this.levelId = levelId;
+    this.initialize(levelId);
     let bg = this.scene.add.image(0, 0, "dungeon_background");
     bg.displayWidth = this.scene.sys.canvas.width;
     bg.displayHeight = this.scene.sys.canvas.height;
@@ -49,7 +52,8 @@ export default class GameController {
 
     // Inputs erstellen
     this.cursors = this.scene.input.keyboard.createCursorKeys();
-    this.HtmlController = new HtmlController();
+    this.HtmlModel = new HtmlModel("Wilkommen", 0);
+    this.HtmlController = new HtmlController(this.HtmlModel);
 
     // Flags erstellen
     this.disableCollisions = false; // Flag zum Deaktivieren der Kollisionen
@@ -59,6 +63,20 @@ export default class GameController {
     this.moveEvents = []; // Sammlung von Eingaben für Bewegungen
   }
 
+  initialize(levelId) {
+    if (levelId === 1) {
+      console.log("Level 1 ");
+    }
+    if (levelId === 2) {
+      console.log("Level 2 ");
+    }
+    if (levelId === 3) {
+      console.log("Level 3 ");
+    }
+  }
+
+
+  
   drawAllObstacles() {
     this.obstacleModel.createObstacles();
     const obstacleData = this.obstacleModel.getObstacles();
@@ -301,6 +319,8 @@ export default class GameController {
   endGame() {
     console.log("Endgame");
     this.snakeModel.alive = false;
+    console.log("getscore " + this.snakeModel.getScore());
+    this.HtmlModel.setKronen(this.snakeModel.getScore());
     this.HtmlController.handleDeath();
   }
 

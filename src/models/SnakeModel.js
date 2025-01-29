@@ -77,6 +77,10 @@ export default class SnakeModel {
   getSpeed() {
     return this.speed;
   }
+
+  getScore(){
+    return this.score;
+  }
     
     // Bewegt den Schlangenkopf in die aktuelle Richtung und aktualisiert die Positionen der Körpersegmente,
     // sodass jedes Segment die Position des vorherigen übernimmt. Alle Positionen werden auf das Raster ausgerichtet.

@@ -38,6 +38,22 @@ import tailLefth from "../assets/snake/haku/tail_left.png";
 import tailUph from "../assets/snake/haku/tail_up.png";
 import tailDownh from "../assets/snake/haku/tail_down.png";
 
+// Pink Skin importieren
+import headRightp from "../assets/snake/pink/head_right.png";
+import headLeftp from "../assets/snake/pink/head_left.png";
+import headUpp from "../assets/snake/pink/head_up.png";
+import headDownp from "../assets/snake/pink/head_down.png";
+import bodyHorizontalp from "../assets/snake/pink/body_horizontal.png";
+import bodyVerticalp from "../assets/snake/pink/body_vertical.png";
+import bodyRightUpp from "../assets/snake/pink/body_rightup.png";
+import bodyRightDownp from "../assets/snake/pink/body_rightdown.png";
+import bodyDownRightp from "../assets/snake/pink/body_downright.png";
+import bodyUpRightp from "../assets/snake/pink/body_upright.png";
+import tailRightp from "../assets/snake/pink/tail_right.png";
+import tailLeftp from "../assets/snake/pink/tail_left.png";
+import tailUpp from "../assets/snake/pink/tail_up.png";
+import tailDownp from "../assets/snake/pink/tail_down.png";
+
 // Mysterybox-Bild importieren
 import mysteryBoxImg from '../assets/images/items/mysteryBox.png'
 // Handicap-Bilder importieren
@@ -122,7 +138,7 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
-    this.controller = new GameController(this);
+    this.controller = new GameController(this, this.levelId);
   }
 
   update(time) {

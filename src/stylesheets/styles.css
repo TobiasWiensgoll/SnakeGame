@@ -1,3 +1,9 @@
+* {
+  font-family: "Berkshire Swash", serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
 html,
 body {
   height: 100vh;
@@ -171,10 +177,11 @@ canvas {
   pointer-events: none; /* Text ist nicht klickbar */
 }
 
-.musicOff {
+.musicOn {
   display: none;
   position: relative;
   left: -98px;
+  z-index: 999;
 }
 
 /* Für Level Menu */
@@ -193,6 +200,7 @@ canvas {
   width: 300px;
   height: 400px;
   border-radius: 16px;
+  z-index: 99;
 }
 .level1 {
   background-image: url(/src/assets/images/dungeon_background.jpg);
@@ -252,4 +260,43 @@ canvas {
 }
 .MenuContainer2 {
   display: none;
+}
+.LabyrinthButton {
+  width: 35%;
+}
+
+.LabyrinthButton {
+  position: relative;
+  display: inline-block;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+
+  /* margin-right: -50px; */
+}
+
+.LabyrinthButton img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px; /* Optional: abgerundete Ecken */
+}
+
+.LabyrinthButton span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  pointer-events: none; /* Text ist nicht klickbar */
+}
+.LabyrinthContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -80px;
+  margin-bottom: -160px;
 }
