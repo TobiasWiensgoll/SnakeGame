@@ -120,6 +120,23 @@ export default class Game extends Phaser.Scene {
       this.load.image("tailDown", tailDownh);
     }
 
+    if (this.skinId === 3) {
+      this.load.image("snakeRight", headRightp);
+      this.load.image("snakeLeft", headLeftp);
+      this.load.image("snakeUp", headUpp);
+      this.load.image("snakeDown", headDownp);
+      this.load.image("bodyHorizontal", bodyHorizontalp);
+      this.load.image("bodyVertical", bodyVerticalp);
+      this.load.image("bodyRightUp", bodyRightUpp);
+      this.load.image("bodyRightDown", bodyRightDownp);
+      this.load.image("bodyDownRight", bodyDownRightp);
+      this.load.image("bodyUpRight", bodyUpRightp);
+      this.load.image("tailRight", tailRightp);
+      this.load.image("tailLeft", tailLeftp);
+      this.load.image("tailUp", tailUpp);
+      this.load.image("tailDown", tailDownp);
+    }
+
     // ****************************** Item-Bilder ******************************
     this.load.image("mysteryBox", mysteryBoxImg);
     // Powerup-Bilder
