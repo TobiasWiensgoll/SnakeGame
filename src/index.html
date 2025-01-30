@@ -1,12 +1,116 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./stylesheets/styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./stylesheets/styles.css" />
     <title>Snake</title>
-</head>
-<body>
-    <script src="./main.js"></script>
-</body>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- 1200x800 -->
+    <div class="MenuContainer">
+      <div class="TopButtonBar">
+        <div class="dropDown">
+          <img
+            class="roundButton dropbutton"
+            alt="1"
+            src="./assets/menus/button_Skin.png"
+          />
+          <div class="dropdownContent">
+            <img class="dropdownbg" src="./assets/menus/dropdown.png" />
+            <div class="dropflexbox">
+              <img
+                class="dropdownitem"
+                alt="2"
+                src="./assets/menus/button_Skin 1.png"
+                onclick="swapImages(this)"
+              />
+              <img
+                class="dropdownitem"
+                alt="3"
+                src="./assets/menus/button_Skin 2.png"
+                onclick="swapImages(this)"
+              />
+            </div>
+          </div>
+        </div>
+
+        <img class="roundButton" id="musicToggle" src="./assets/menus/button_musicOff.png" />
+        <audio id="backgroundMusic" src="./assets/Soundtrack.mp3" loop></audio>
+        <img
+          class="roundButton musicOn"
+          src="./assets/menus/button_musicOn.png"
+        />
+      </div>
+      <div class="CrownBar">
+        <div class="crownContainer">
+          <img class="crown" src="./assets/menus/button_hauptmenue.png" />
+          <span class="crownText">Hauptmenu</span>
+        </div>
+      </div>
+      <div class="InsideContainer">
+        <div class="statustext">Wilkommen</div>
+        <div class="crownContainer">
+          <img class="kronen" src="./assets/menus/banner_withCrown.png" />
+          <span class="ScoreText">0</span>
+        </div>
+        <div class="highScoretext">HIGHSCORE: </div>
+      </div>
+      <div class="BottomButtonContainer">
+        <button class="StartButton" id="startButton">
+          <img src="./assets/menus/button.png" />
+          <span>Start</span>
+        </button>
+
+        <button class="StartButton" id="levelButton">
+          
+            <img src="./assets/menus/button.png" />
+          </a>
+          <span>Level</span>
+        </button>
+      </div>
+    </div>
+    <!-- Ende des Hauptmenus -->
+    <div class="MenuContainer2">
+      <div class="CrownBar2">
+        <div class="crownContainer2">
+          <img class="crown2" src="/src/assets/menus/button_hauptmenue.png" />
+          <span class="crownText2">Level</span>
+        </div>
+      </div>
+      <div class="InsideContainer2">
+        <div class="LevelContainer">
+          <div class="level level1" value="1"></div>
+          <p>Level 1</p>
+          <p>Dragon Dungeon</p>
+        </div>
+        <div class="LevelContainer">
+          <div class="level level2" value="2"></div>
+          <p>Level 2</p>
+          <p>Mythical Forest</p>
+        </div>
+        <div class="LevelContainer">
+          <div class="level level3" value="3"></div>
+          <p>Level 3</p>
+          <p>Serpentine Sunset</p>
+        </div>
+      </div>
+      <div class="LabyrinthContainer">
+        <button class="LabyrinthButton" id="LabyrinthButton">
+          <img src="./assets/menus/button.png" />
+          <span>Labyrinth</span>
+        </button>
+      </div>
+      <div class="BottomButtonContainer">
+        
+          <img class="backButton" id="backButton" src="/src/assets/menus/button_back.png" />
+        
+      </div>
+    </div>
+    <script type="module" src="./main.js"></script>
+    <script src="./menu.js"></script>
+  </body>
 </html>

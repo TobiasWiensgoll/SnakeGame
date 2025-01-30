@@ -1,3 +1,9 @@
+* {
+  font-family: "Berkshire Swash", serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
 html,
 body {
   height: 100vh;
@@ -7,7 +13,7 @@ body {
   align-items: center;
 }
 body {
-  background-image: url("/assets/images/WS_Hintergrundbild.jpg");
+  background-image: url("../assets/images/WS_Hintergrundbild.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -15,4 +21,282 @@ body {
 canvas {
   border: 2px solid #000;
   display: block;
+}
+
+/* Für menu */
+
+.MenuContainer {
+  position: absolute;
+  width: 1200px;
+  height: 800px;
+  /* background-color: azure; */
+  background-color: rgba(240, 255, 255, 60%);
+  /* opacity: 60%; */
+  border-radius: 16px;
+  display: flex; /* Aktiviert Flexbox */
+  flex-direction: column; /* Elemente vertikal anordnen */
+}
+.roundButton {
+  position: relative;
+  width: 8%;
+  height: auto;
+  z-index: 20;
+}
+
+.dropDown {
+  display: inline;
+}
+.dropdownContent .dropdownbg {
+  width: 30%;
+  display: inline;
+  left: -96.5px;
+  position: relative;
+  z-index: 1;
+}
+.dropflexbox {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: -96.5px;
+  top: 90px;
+  z-index: 22;
+}
+.dropdownitem {
+  width: 30%;
+  height: auto;
+}
+.dropdownContent {
+  display: inline;
+  position: absolute;
+  display: none;
+}
+.dropbutton {
+  cursor: pointer;
+}
+.dropbutton:hover + .dropdownContent {
+  display: inline;
+}
+
+.dropdownContent:hover {
+  display: inline;
+}
+
+.TopButtonBar {
+  margin-left: 2%;
+  margin-top: 2%;
+}
+
+.CrownBar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -228px;
+}
+.crown {
+  width: 50%;
+}
+.crownContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.crownText {
+  display: block;
+  position: absolute;
+  font-size: 3em;
+}
+.ScoreText {
+  display: block;
+  position: absolute;
+  top: 105px;
+  font-size: 3em;
+}
+.InsideContainer {
+  position: relative;
+  top: -20%;
+  display: flex; /* Aktiviert Flexbox */
+  flex-direction: column; /* Elemente vertikal anordnen */
+  align-items: center; /* Zentriert die Items horizontal */
+  justify-content: center; /* Optional: Zentriert die Items vertikal (falls nötig) */
+  height: 100%; /* Optional: Container kann volle Höhe einnehmen */
+  gap: 50px; /* Abstand zwischen den Items */
+}
+
+.statustext {
+  font-size: 4em; /* Schriftgröße anpassen */
+}
+
+.kronen {
+  width: 50%; /* Breite der Krone */
+  height: auto; /* Automatische Höhe beibehalten */
+  margin-bottom: 10px;
+}
+
+.highScoretext {
+  font-size: 1.5em; /* Schriftgröße anpassen */
+  margin-top: -80px;
+}
+
+.BottomButtonContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -15px;
+}
+
+.StartButton {
+  width: 45%;
+}
+
+.StartButton {
+  position: relative;
+  display: inline-block;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+}
+
+.StartButton img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px; /* Optional: abgerundete Ecken */
+}
+
+.StartButton span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  pointer-events: none; /* Text ist nicht klickbar */
+}
+
+.musicOn {
+  display: none;
+  position: relative;
+  left: -98px;
+  z-index: 999;
+}
+
+/* Für Level Menu */
+.MenuContainer2 {
+  position: absolute;
+  width: 1200px;
+  height: 800px;
+  /* background-color: azure; */
+  background-color: rgba(240, 255, 255, 60%);
+  /* opacity: 60%; */
+  border-radius: 16px;
+  display: flex; /* Aktiviert Flexbox */
+  flex-direction: column; /* Elemente vertikal anordnen */
+}
+.level {
+  width: 300px;
+  height: 400px;
+  border-radius: 16px;
+  z-index: 99;
+}
+.level1 {
+  background-image: url(/src/assets/images/dungeon_background.jpg);
+  background-size: 250%;
+}
+.level2 {
+  background-image: url(/src/assets/images/Forest.png);
+  background-size: 150%;
+}
+.level3 {
+  background-image: url(/src/assets/images/dungeon\ 1.png);
+  background-size: 150%;
+}
+.level + p,
+.level + p + p {
+  text-align: center;
+}
+
+.backButton {
+  width: 10%;
+  position: relative;
+  top: 30px;
+  margin-left: 60vw;
+}
+
+.CrownBar2 {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -110px;
+}
+.crown2 {
+  width: 50%;
+}
+.crownContainer2 {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.crownText2 {
+  display: block;
+  position: absolute;
+  font-size: 3em;
+}
+
+.InsideContainer2 {
+  position: relative;
+  top: -10%;
+  display: flex; /* Aktiviert Flexbox */
+  flex-direction: row; /* Elemente vertikal anordnen */
+  align-items: center; /* Zentriert die Items horizontal */
+  justify-content: center; /* Optional: Zentriert die Items vertikal (falls nötig) */
+  height: 100%; /* Optional: Container kann volle Höhe einnehmen */
+  gap: 50px; /* Abstand zwischen den Items */
+}
+.MenuContainer2 {
+  display: none;
+}
+.LabyrinthButton {
+  width: 35%;
+}
+
+.LabyrinthButton {
+  position: relative;
+  display: inline-block;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+
+  /* margin-right: -50px; */
+}
+
+.LabyrinthButton img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px; /* Optional: abgerundete Ecken */
+}
+
+.LabyrinthButton span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+  pointer-events: none; /* Text ist nicht klickbar */
+}
+.LabyrinthContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -80px;
+  margin-bottom: -160px;
 }
