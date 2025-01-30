@@ -71,6 +71,7 @@ import multiplikatorImg from "../assets/images/items/powerups/multiplikator.png"
 import potionImg from "../assets/images/items/powerups/potion.png";
 
 import Phaser from "phaser";
+import ObstacleModel from "../models/ObstacleModel.js";
 
 export default class Game extends Phaser.Scene {
   constructor(levelId, skinId) {
