@@ -5,13 +5,33 @@ export default class SnakeModel {
     this.body = [];
     this.directions = [];
     this.positions = [];
-    this.moveTime = 0;
-    this.speed = 150
+    this.score =0;
+    this.lives = 1;
+    this.speed = 150;
+    this.moveTime = this.speed;
     this.alive = true;
     this.direction = Phaser.Math.Vector2.UP;
     this.directions.unshift(this.direction.clone());
+    this.isDoublePointsActive = false; // Flag, das angibt, ob der Multiplikator aktiv ist
+    this.isFrozen= false;  //neuer Zustand für eingefrorene Bewegung
   }
+
+  // Bewegung der Schlange einfrieren
+  freeze() {
+    this.isFrozen = true;
+    this.setSpeed(3000);
+  }
+
+   // Bewegung der Schlange wieder aktivieren
+   unfreeze() {
+    this.isFrozen = false;
+    this.setSpeed(150);
+  }
+
   
+
+
+
   // Die grow() Methode fügt der Schlange ein neues Segment am Ende hinzu,
   // basierend auf der Richtung des letzten Segments. Es wird ein neues Sprite erstellt
   // und zur Schlange hinzugefügt, wobei eine Kollision mit dem Kopf verhindert wird.
@@ -28,6 +48,38 @@ export default class SnakeModel {
     this.directions.push(lastDirection.clone());
   
     this.scene.physics.add.collider(this.snakeHead, newPart, this.endGame, null, this);
+
+    // Punktestand erhöhen, jedes Mal wenn die Schlange wächst
+  this.addPoints(10); // 10 Punkte für jedes Wachsen der Schlange, du kannst das anpassen
+
+  }
+
+  doublePoints(isActive) {
+    this.isDoublePointsActive = isActive;
+  }
+
+  addPoints(amount) {
+
+    if (this.isDoublePointsActive) {
+      amount *= 2; // Verdoppelt die Punkte
+    }
+
+    this.score += amount; // Punktestand erhöhen
+    console.log('Score:', this.score); // Optional: Ausgabe des Punktestands im Konsolenlog
+  }
+
+  // Setzt die Geschwindigkeit der Schlange
+  setSpeed(speed) {
+    this.speed = speed;
+  }
+
+  // Gibt die aktuelle Geschwindigkeit der Schlange zurück
+  getSpeed() {
+    return this.speed;
+  }
+
+  getScore(){
+    return this.score;
   }
     
     // Bewegt den Schlangenkopf in die aktuelle Richtung und aktualisiert die Positionen der Körpersegmente,
@@ -64,5 +116,12 @@ export default class SnakeModel {
     
       this.moveTime = this.scene.time.now + this.speed;
       return true;
+    }
+
+    loseLife() {
+      this.lives -= 1;
+      if (this.lives <= 0) {
+        this.alive = false;
+      }
     }
   }
