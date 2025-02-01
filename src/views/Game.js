@@ -3,7 +3,7 @@ import GameController from "../controller/GameController.js";
 // Food / Obstacles importieren / background
 import dungeonBackgroundImage from "../assets/images/dungeon_background.jpg";
 import dungeonBackgroundImage2 from "../assets/images/forest_background.png";
-import dungeonBackgroundImage3 from "../assets/images/sky_background.png";
+import dungeonBackgroundImage3 from "../assets/images/sky_background.gif";
 import obstacleBrickImage from "../assets/images/obstacle_brick.png";
 import appleImage from "../assets/images/apple.png";
 import foodImage from "../assets/images/food.png";
@@ -95,7 +95,7 @@ export default class Game extends Phaser.Scene {
       this.load.image("dungeon_background", dungeonBackgroundImage2);
     }
     if (this.levelId === 3) {
-      this.load.image("dungeon_background", dungeonBackgroundImage3);
+      this.load.video("dungeon_background", dungeonBackgroundImage3);
     }
 
     // ****************************** Snake-Bilder ******************************
