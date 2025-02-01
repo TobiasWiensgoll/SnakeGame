@@ -6,6 +6,7 @@ export default class HtmlModel {
     this.kronen = kronen; // Der Wert der Kronen, der in der ScoreText span angezeigt wird
     this.skinId = 1;
     this.levelId = 1;
+    this.GameModeId = 0;
     this.initialise();
     this.highscore = globalHighScore;
   }
@@ -41,10 +42,17 @@ export default class HtmlModel {
   getKronen() {
     return this.kronen;
   }
-
+  getGameModeId() {
+    return this.GameModeId;
+  }
   setLevelId(levelId) {
     this.levelId = levelId;
     console.log("Ich setze die levelid auf" + this.levelId);
+  }
+
+  setGameModeId(gameModeId) {
+    this.gameModeId = gameModeId;
+    console.log("Ich setze die GameModeId auf" + this.gameModeId);
   }
 
   getLevelId() {

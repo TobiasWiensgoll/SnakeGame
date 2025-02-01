@@ -299,4 +299,5 @@ canvas {
   align-items: center;
   top: -80px;
   margin-bottom: -160px;
+  z-index: 900;
 }

@@ -6,7 +6,6 @@ export default class HtmlController {
     this.initListeners();
   }
   initListeners() {
-    // Beispiel: Button mit ID "startButton" startet das Spiel
     const startButton = document.getElementById("startButton");
     if (startButton) {
       startButton.addEventListener("click", () => {
@@ -33,6 +32,15 @@ export default class HtmlController {
       level3Button.addEventListener("click", () => {
         this.htmlModel.setLevelId(3);
 
+        this.startGameHandler();
+      });
+    }
+
+    const labButton = document.querySelector(".LabyrinthContainer");
+    if (labButton) {
+      labButton.addEventListener("click", () => {
+        this.htmlModel.setLevelId(1);
+        this.htmlModel.setGameModeId(1);
         this.startGameHandler();
       });
     }
@@ -63,6 +71,7 @@ export default class HtmlController {
   handleDeath() {
     console.log("handledeath");
     this.htmlModel.changeStatusText("Du bist gestorben :/");
+    this.htmlModel.setGameModeId(0);
     this.showMenus();
   }
 }

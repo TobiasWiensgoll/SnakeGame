@@ -8,18 +8,16 @@ import ObstacleView from "../views/ObstacleView";
 
 import MysteryBox from "../models/items/Mysterybox.js";
 
-import ItemDisplayView from "../views/ItemDisplayView.js"
+import ItemDisplayView from "../views/ItemDisplayView.js";
 
 import HtmlController from "./HtmlController.js";
 import HtmlModel from "../models/HtmlModel.js";
 
 export default class GameController {
   constructor(scene, levelId) {
-
     // Szene und Spielfeld erstellen
     this.scene = scene;
     this.levelId = levelId;
-    this.initialize(levelId);
     let bg = this.scene.add.image(0, 0, "dungeon_background");
     bg.displayWidth = this.scene.sys.canvas.width;
     bg.displayHeight = this.scene.sys.canvas.height;
@@ -61,36 +59,38 @@ export default class GameController {
     // Bewegung Setup
     this.keyLock = false; // Sperrt Tasteneingaben, um schnelle Richtungswechsel zu verhindern
     this.moveEvents = []; // Sammlung von Eingaben für Bewegungen
+    this.initialize(levelId);
   }
 
   initialize(levelId) {
-    if (levelId === 1) {
-      console.log("Level 1 ");
-    }
-    if (levelId === 2) {
-      console.log("Level 2 ");
-    }
-    if (levelId === 3) {
-      console.log("Level 3 ");
+    if (this.HtmlModel.getGameModeId() != 1) {
+      if (levelId === 1) {
+        console.log("Level 1 ");
+      }
+      if (levelId === 2) {
+        console.log("Level 2 ");
+      }
+      if (levelId === 3) {
+        console.log("Level 3 ");
+      }
+    } else {
+      // TODO Labyritnh Implementation
+      console.log("Labyrinth Mode");
     }
   }
 
-
-  
   drawAllObstacles() {
     this.obstacleModel.createObstacles();
     const obstacleData = this.obstacleModel.getObstacles();
     this.obstacleView.drawAllObstacles(obstacleData);
   }
 
-
-
   // *********************************** INPUT-HANDLING ***********************************
 
   /**
    * handleInput() überprüft die Tasten-Eingaben des Spielers und ändert die Bewegungsrichtung der Schlange,
    * solange keine entgegengesetzte Richtung gewählt wurde (z.B. nicht nach links, wenn die Schlange nach rechts fährt).
-   * @returns 
+   * @returns
    */
   handleInput() {
     if (this.keyLock) return; // Input ignorieren, wenn Bewegung aktiv ist
@@ -137,26 +137,24 @@ export default class GameController {
    */
   handleItemActivation() {
     if (this.cursors.space.isDown) {
-      if(this.activeItems[0] && !this.currentActiveItem){
+      if (this.activeItems[0] && !this.currentActiveItem) {
         this.currentActiveItem = true;
         console.log(this.activeItems);
         this.activeItems[0].onAction(this.snakeModel);
         this.removeItemFromDisplay();
       }
     }
-    if(this.cursors.space.isUp){
+    if (this.cursors.space.isUp) {
       this.currentActiveItem = false;
     }
   }
-
-
 
   // *********************************** COLLISION-HANDLING ***********************************
 
   /**
    * checkSnakeFoodCollision() prüft, ob der Schlangenkopf die Nahrung berührt.
    * Wenn ja, wächst die Schlange und die Nahrung wird an einer neuen Position respawnt.
-   * @returns 
+   * @returns
    */
   checkSnakeObstacleCollision() {
     if (!this.disableCollisions) {
@@ -222,7 +220,7 @@ export default class GameController {
   /**
    * checkWallCollision() überprüft, ob der Schlangenkopf das Spielfeld verlässt.
    * Falls der Kopf den Rand des Spielfelds überschreitet, wird die Schlange als tot markiert.
-   * @param {*} snakeHead 
+   * @param {*} snakeHead
    */
   checkWallCollision(snakeHead) {
     if (
@@ -251,7 +249,12 @@ export default class GameController {
       )
     ) {
       console.log(this.activeItems.length);
-      this.addItemToDisplay(this.mysteryBox.onCollision(this.snakeModel, this.activeItems.length >= 4));
+      this.addItemToDisplay(
+        this.mysteryBox.onCollision(
+          this.snakeModel,
+          this.activeItems.length >= 4
+        )
+      );
     }
     return false;
   }
@@ -259,7 +262,7 @@ export default class GameController {
   /**
    * prüft, ob der Feuerball ein Hindernis trifft
    * bei einer Kollision wird der Feuerball gestoppt und das Hindernis entfernt
-   * @returns 
+   * @returns
    */
   checkFireBallObstacleCollision() {
     if (this.activeFireball) {
@@ -290,7 +293,6 @@ export default class GameController {
           return;
         }
       }
-      
     }
   }
 
@@ -300,14 +302,25 @@ export default class GameController {
    */
   updateLightMask() {
     if (this.activeTorch) {
-      var maskImg = this.scene.add.image(this.snakeModel.snakeHead.x, this.snakeModel.snakeHead.y, 'lightMask').setVisible(false);
+      var maskImg = this.scene.add
+        .image(
+          this.snakeModel.snakeHead.x,
+          this.snakeModel.snakeHead.y,
+          "lightMask"
+        )
+        .setVisible(false);
       var mask = maskImg.createBitmapMask();
       mask.invertAlpha = true;
-  
+
       this.lightMask.clear();
-      this.lightMask.fillStyle(0x000000, 0.9); 
+      this.lightMask.fillStyle(0x000000, 0.9);
       this.lightMask.setMask(mask);
-      this.lightMask.fillRect(0, 0, this.scene.sys.canvas.width, this.scene.sys.canvas.height);
+      this.lightMask.fillRect(
+        0,
+        0,
+        this.scene.sys.canvas.width,
+        this.scene.sys.canvas.height
+      );
     }
   }
 
@@ -328,7 +341,7 @@ export default class GameController {
    * update() wird in jedem Frame aufgerufen, um die Eingaben zu verarbeiten, die Schlange zu bewegen
    * und Kollisionen zu überprüfen. Wenn die Schlange sich bewegt, werden Kollisionen mit sich selbst,
    * dem Essen und den Wänden geprüft. Bei einer Kollision endet das Spiel.
-   * @param {*} time 
+   * @param {*} time
    */
   update(time) {
     this.handleInput();
@@ -360,11 +373,11 @@ export default class GameController {
   // *********************************** ITEM DISPLAY ***********************************
 
   addItemToDisplay(item) {
-    if(item && item !== null){
+    if (item && item !== null) {
       this.activeItems.push(item);
       console.log(this.activeItems);
       this.itemDisplayView.addItem(item);
-    } else if(item === null){
+    } else if (item === null) {
       this.itemDisplayView.redOutline();
     }
   }
