@@ -36,7 +36,7 @@ export default class HtmlController {
       });
     }
 
-    const labButton = document.querySelector(".LabyrinthContainer");
+    const labButton = document.querySelector(".LabyrinthButton");
     if (labButton) {
       labButton.addEventListener("click", () => {
         this.htmlModel.setLevelId(1);

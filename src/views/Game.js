@@ -95,7 +95,7 @@ export default class Game extends Phaser.Scene {
       this.load.image("dungeon_background", dungeonBackgroundImage2);
     }
     if (this.levelId === 3) {
-      this.load.video("dungeon_background", dungeonBackgroundImage3);
+      this.load.image("dungeon_background", dungeonBackgroundImage3);
     }
 
     // ****************************** Snake-Bilder ******************************
