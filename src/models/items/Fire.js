@@ -41,6 +41,7 @@ export default class FireItem extends Item {
           this.stopFireBall();
           this.scene.controller.obstacleModel.removeObstacle(position.x, position.y);
           this.scene.controller.obstacleView.removeObstacle(position.x, position.y);
+          this.scene.controller.addPoints(5);
           clearInterval(this.fireballInterval);
       }
     }, 70); // Alle 50ms (20 Updates pro Sekunde)

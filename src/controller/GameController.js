@@ -214,6 +214,7 @@ export default class GameController {
             this.snakeModel.loseLife();
             this.obstacleModel.removeObstacle(obstacle.x, obstacle.y);
             this.obstacleView.removeObstacle(obstacle.x, obstacle.y);
+            this.addPoints(5);
           } else {
             this.snakeModel.loseLife();
             if (!this.snakeModel.alive) {

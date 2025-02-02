@@ -49,33 +49,29 @@ export default class ObstacleModel {
     const tileSize = this.field.tileSize;
     const numObstacles = 20; // Anzahl der Hindernisse
     const maxWallLength = 5; // Maximale Länge der Hinderniswände
-
+  
     const exclusionZoneSize = 6 * tileSize; // Größe des 6x6 Feldes in der Mitte
-    const exclusionZoneTopLeftWidth = 4 * tileSize; // Breite des 4x7 Feldes in der oberen linken Ecke
-    const exclusionZoneTopLeftHeight = 7 * tileSize; // Höhe des 4x7 Feldes in der oberen linken Ecke
-
+  
     const obstacleSprite = this.getObstacleSprite();
-
+  
     for (let i = 0; i < numObstacles; i++) {
       let startX, startY;
       do {
         startX = Math.floor(Math.random() * (width / tileSize)) * tileSize;
         startY = Math.floor(Math.random() * (height / tileSize)) * tileSize;
       } while (
-        // Überprüfen, ob die Position in der oberen linken Ecke liegt
-        (startX < exclusionZoneTopLeftWidth && startY < exclusionZoneTopLeftHeight) ||
         // Überprüfen, ob die Position in der Mitte des Spielfelds liegt
         (startX >= (width / 2 - exclusionZoneSize / 2) && startX < (width / 2 + exclusionZoneSize / 2) &&
          startY >= (height / 2 - exclusionZoneSize / 2) && startY < (height / 2 + exclusionZoneSize / 2))
       );
-
+  
       const wallLength = Math.floor(Math.random() * maxWallLength) + 1;
       const isHorizontal = Math.random() > 0.5;
-
+  
       for (let j = 0; j < wallLength; j++) {
         const x = startX + (isHorizontal ? j * tileSize : 0);
         const y = startY + (isHorizontal ? 0 : j * tileSize);
-
+  
         if (x < width && y < height) {
           this.addObstacle(x, y, obstacleSprite);
         }
