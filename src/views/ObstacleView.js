@@ -8,7 +8,7 @@ export default class ObstacleView {
     const obstacle = this.scene.physics.add.sprite(x, y, type);
     obstacle.setDisplaySize(40, 40).setSize(40, 40);
     obstacle.setImmovable(true);
-    console.log(`Obstacle drawn at (${x}, ${y})`);
+    //console.log(`Obstacle drawn at (${x}, ${y})`);
     this.obstacles.push(obstacle);
     return obstacle;
   }

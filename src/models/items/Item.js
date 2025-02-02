@@ -13,9 +13,14 @@ export default class Item {
      * Erstellt ein Item an einer zufälligen Position auf dem Spielfeld
      */
     spawn() {
-      const position = this.field.getRandomPosition();
+      var position = this.field.getRandomPosition();
       this.x = position.x;
       this.y = position.y;
+      while(this.scene.controller.checkItemObstacleCollision(this)) {
+        position = this.field.getRandomPosition();
+        this.x = position.x;
+        this.y = position.y
+      }
       this.createSprite();
     }
 

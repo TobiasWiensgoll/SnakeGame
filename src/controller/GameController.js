@@ -12,6 +12,7 @@ import ItemDisplayView from "../views/ItemDisplayView.js";
 
 import HtmlController from "./HtmlController.js";
 import HtmlModel from "../models/HtmlModel.js";
+import Item from "../models/items/Item.js";
 
 export default class GameController {
   constructor(scene, levelId) {
@@ -40,7 +41,7 @@ export default class GameController {
     this.activeItems = [];
     this.currentActiveItem = false;
     this.mysteryBox = new MysteryBox(scene, this.field);
-    this.mysteryBox.spawn();
+    //this.mysteryBox.spawn();
     this.activeFireball = null;
     this.activeTorch = false;
     this.lightMask = this.scene.add.graphics();
@@ -63,20 +64,30 @@ export default class GameController {
   }
 
   initialize(levelId) {
-    if (this.HtmlModel.getGameModeId() != 1) {
-      if (levelId === 1) {
-        console.log("Level 1 ");
+    this.scene.events.once("create", () => {
+      if (this.HtmlModel.getGameModeId() != 1) {
+        if (levelId === 1) {
+          this.mysteryBox.spawn();
+          //this.obstacleModel.createLabyrinth();
+          this.drawAllObstacles();
+          console.log("Level 1 ");
+        }
+        if (levelId === 2) {
+          this.mysteryBox.spawn();
+          console.log("Level 2 ");
+        }
+        if (levelId === 3) {
+          this.mysteryBox.spawn();
+          console.log("Level 3 ");
+        }
+      } else {
+        this.obstacleModel.createLabyrinth();
+        this.drawAllObstacles();
+        // TODO Labyritnh Implementation
+        this.mysteryBox.spawn();
+        console.log("Labyrinth Mode");
       }
-      if (levelId === 2) {
-        console.log("Level 2 ");
-      }
-      if (levelId === 3) {
-        console.log("Level 3 ");
-      }
-    } else {
-      // TODO Labyritnh Implementation
-      console.log("Labyrinth Mode");
-    }
+    });
   }
 
   drawAllObstacles() {
@@ -152,8 +163,11 @@ export default class GameController {
   // *********************************** COLLISION-HANDLING ***********************************
 
   /**
-   * checkSnakeFoodCollision() prüft, ob der Schlangenkopf die Nahrung berührt.
-   * Wenn ja, wächst die Schlange und die Nahrung wird an einer neuen Position respawnt.
+   * checkSnakeObstacleCollision() prüft, ob der Schlangenkopf ein Hindernis berührt
+   * und ob die Schlange noch Leben hat.
+   * Wenn ja, wird ein Leben abgezogen und das Hindernis entfernt.
+   * Wenn die Schlange keine Leben mehr hat, wird das Spiel beendet.
+   * 
    * @returns
    */
   checkSnakeObstacleCollision() {
@@ -188,6 +202,40 @@ export default class GameController {
     return false;
   }
 
+  /**
+   * checkItemObstacleCollision() prüft, ob ein Item ein Hindernis berührt.
+   * Wenn ja, wird true zurückgegeben, ansonsten false.
+   * @param {*} item 
+   * @returns 
+   */
+  checkItemObstacleCollision(item) {
+    const obstacles = this.obstacleModel.getObstacles();
+    if(item.x === null || item.y === null) {
+      return;
+    }
+    const itemPos = this.field.alignToGrid(
+      item.x,
+      item.y
+    );
+
+    for (const obstacle of obstacles) {
+      const obstaclePos = this.field.alignToGrid(obstacle.x, obstacle.y);
+
+      if (
+        itemPos.x === obstaclePos.x &&
+        itemPos.y === obstaclePos.y
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * checkSnakeFoodCollision() prüft, ob der Schlangenkopf die Nahrung berührt.
+   * Wenn ja, wächst die Schlange und die Nahrung wird an einer neuen Position respawnt.
+   * @returns
+   */
   checkSnakeFoodCollision() {
     if (
       this.scene.physics.overlap(this.snakeModel.snakeHead, this.foodModel.food)
