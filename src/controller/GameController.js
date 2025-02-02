@@ -67,23 +67,29 @@ export default class GameController {
     this.scene.events.once("create", () => {
       if (this.HtmlModel.getGameModeId() != 1) {
         if (levelId === 1) {
-          this.mysteryBox.spawn();
-          //this.obstacleModel.createLabyrinth();
+          this.obstacleModel.setLevel(1);
+          this.obstacleModel.createRandomObstacles();
           this.drawAllObstacles();
+          this.mysteryBox.spawn();
           console.log("Level 1 ");
         }
         if (levelId === 2) {
+          this.obstacleModel.setLevel(2);
+          this.obstacleModel.createRandomObstacles();
+          this.drawAllObstacles();
           this.mysteryBox.spawn();
           console.log("Level 2 ");
         }
         if (levelId === 3) {
+          this.obstacleModel.setLevel(3);
+          this.obstacleModel.createRandomObstacles();
+          this.drawAllObstacles();
           this.mysteryBox.spawn();
           console.log("Level 3 ");
         }
       } else {
         this.obstacleModel.createLabyrinth();
         this.drawAllObstacles();
-        // TODO Labyritnh Implementation
         this.mysteryBox.spawn();
         console.log("Labyrinth Mode");
       }
@@ -91,7 +97,7 @@ export default class GameController {
   }
 
   drawAllObstacles() {
-    this.obstacleModel.createObstacles();
+    this.obstacleModel.createRandomObstacles;
     const obstacleData = this.obstacleModel.getObstacles();
     this.obstacleView.drawAllObstacles(obstacleData);
   }
