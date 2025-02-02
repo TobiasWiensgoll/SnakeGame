@@ -11,7 +11,7 @@ import TorchItem from './Torch';
 export default class MysteryBox extends Item {
   constructor(scene, field) {
     super(scene, field, 'mysteryBox');
-    this.items = [SpeedUpItem,MultiplikatorItem,HelmetItem,FreezeItem,FireItem,PotionItem,TorchItem]; // Liste von möglichen Power-ups
+    this.items = [SpeedUpItem, MultiplikatorItem, HelmetItem, FreezeItem, FireItem, PotionItem, TorchItem]; // Liste von möglichen Power-ups
     this.item = null;
   }
 

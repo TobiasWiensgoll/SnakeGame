@@ -92,7 +92,7 @@ export default class Game extends Phaser.Scene {
     this.load.image("obstacle_leaf", obstacleLeafImage);
     this.load.image("obstacle_cloud", obstacleCloudImage);
     //Background
-    if (this.levelId === 1) {
+    if (this.levelId === 1 || this.levelId === 4) {
       this.load.image("dungeon_background", dungeonBackgroundImage);
     }
     if (this.levelId === 2) {
@@ -172,9 +172,44 @@ export default class Game extends Phaser.Scene {
 
   create() {
     this.controller = new GameController(this, this.levelId);
+    // Add countdown text
+    this.countdownText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, '', {
+      fontSize: '128px',
+      fill: '#ffffff'
+    }).setOrigin(0.5);
+
+    // Start countdown
+    this.startCountdown(3); // 3 seconds countdown
+  }
+
+  startCountdown(seconds) {
+    this.countdown = seconds;
+    this.updateCountdownText();
+
+    this.time.addEvent({
+      delay: 1000,
+      callback: this.updateCountdown,
+      callbackScope: this,
+      repeat: seconds - 1
+    });
+  }
+
+  updateCountdown() {
+    this.countdown--;
+    this.updateCountdownText();
+
+    if (this.countdown <= 0) {
+      this.countdownText.setVisible(false);
+    }
+  }
+
+  updateCountdownText() {
+    this.countdownText.setText(this.countdown);
   }
 
   update(time) {
-    this.controller.update(time);
+    if (this.controller && this.countdown <= 0) {
+      this.controller.update(time);
+    }
   }
 }

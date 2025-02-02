@@ -41,7 +41,6 @@ export default class GameController {
     this.activeItems = [];
     this.currentActiveItem = false;
     this.mysteryBox = new MysteryBox(scene, this.field);
-    //this.mysteryBox.spawn();
     this.activeFireball = null;
     this.activeTorch = false;
     this.lightMask = this.scene.add.graphics();
@@ -65,35 +64,35 @@ export default class GameController {
 
   initialize(levelId) {
     this.scene.events.once("create", () => {
-      if (this.HtmlModel.getGameModeId() != 1) {
         if (levelId === 1) {
-          this.obstacleModel.setLevel(1);
+          console.log("Level 1 ");
+          this.obstacleModel.setLevel(1)
           this.obstacleModel.createRandomObstacles();
           this.drawAllObstacles();
           this.mysteryBox.spawn();
-          console.log("Level 1 ");
         }
         if (levelId === 2) {
-          this.obstacleModel.setLevel(2);
+          this.obstacleModel.setLevel(2)
           this.obstacleModel.createRandomObstacles();
           this.drawAllObstacles();
           this.mysteryBox.spawn();
           console.log("Level 2 ");
         }
         if (levelId === 3) {
-          this.obstacleModel.setLevel(3);
+          this.obstacleModel.setLevel(3)
           this.obstacleModel.createRandomObstacles();
           this.drawAllObstacles();
           this.mysteryBox.spawn();
           console.log("Level 3 ");
         }
-      } else {
-        this.obstacleModel.createLabyrinth();
-        this.drawAllObstacles();
-        this.mysteryBox.spawn();
-        console.log("Labyrinth Mode");
+        if (levelId === 4) {
+          this.obstacleModel.createLabyrinth();
+          this.drawAllObstacles();
+          this.mysteryBox.spawn();
+          console.log("Labyrinth ");
+        }
       }
-    });
+    );
   }
 
   drawAllObstacles() {
@@ -214,28 +213,27 @@ export default class GameController {
    * @param {*} item 
    * @returns 
    */
-  checkItemObstacleCollision(item) {
+  checkObstacleCollision(object) {
     const obstacles = this.obstacleModel.getObstacles();
-    if(item.x === null || item.y === null) {
-      return;
-    }
-    const itemPos = this.field.alignToGrid(
-      item.x,
-      item.y
-    );
-
-    for (const obstacle of obstacles) {
-      const obstaclePos = this.field.alignToGrid(obstacle.x, obstacle.y);
-
-      if (
-        itemPos.x === obstaclePos.x &&
-        itemPos.y === obstaclePos.y
-      ) {
-        return true;
+    if(object.x === null || object.y === null) {
+      console.log("object is null");
+      return;}
+    const objectPos = this.field.alignToGrid(
+      object.x,
+      object.y);
+  
+      for (const obstacle of obstacles) {
+        const obstaclePos = this.field.alignToGrid(obstacle.x, obstacle.y);
+  
+        if (
+          objectPos.x === obstaclePos.x &&
+          objectPos.y === obstaclePos.y
+        ) {
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
 
   /**
    * checkSnakeFoodCollision() prüft, ob der Schlangenkopf die Nahrung berührt.

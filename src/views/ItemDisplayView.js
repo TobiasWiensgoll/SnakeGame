@@ -2,6 +2,7 @@ export default class ItemDisplayView {
     constructor(scene) {
       this.scene = scene;
       this.container = this.createItemDisplay();
+      //this.scene.children.bringToTop(this.container);
     }
   
     /**
@@ -14,6 +15,7 @@ export default class ItemDisplayView {
       background.fillStyle(0x222222, 0.8);
       background.fillRoundedRect(0, 0, 200, 50, 10);
       container.add(background);
+      container.setDepth(1);
       return container;
     }
 
