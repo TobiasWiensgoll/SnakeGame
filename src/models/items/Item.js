@@ -16,7 +16,7 @@ export default class Item {
       var position = this.field.getRandomPosition();
       this.x = position.x;
       this.y = position.y;
-      while(this.scene.controller.checkItemObstacleCollision(this)) {
+      while(this.scene.controller.checkObstacleCollision(this)) {
         position = this.field.getRandomPosition();
         this.x = position.x;
         this.y = position.y
@@ -29,10 +29,7 @@ export default class Item {
      */
     respawn() {
       this.destroy();
-      const position = this.field.getRandomPosition();
-      this.x = position.x;
-      this.y = position.y;
-      this.createSprite();
+      this.spawn();
     }
 
     onAction() {return}

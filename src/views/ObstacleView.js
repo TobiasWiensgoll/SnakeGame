@@ -20,6 +20,7 @@ export default class ObstacleView {
   }
 
   removeObstacle(x, y) {
+    console.log(`Removing obstacle at (${x}, ${y})`);
     const obstacle = this.obstacles.find(obstacle => obstacle.x === x && obstacle.y === y);
     if (obstacle) {
       obstacle.destroy();

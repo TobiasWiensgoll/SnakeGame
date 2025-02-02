@@ -41,8 +41,6 @@ export default class GameController {
     this.activeItems = [];
     this.currentActiveItem = false;
     this.mysteryBox = new MysteryBox(scene, this.field);
-    //this.mysteryBox.spawn();
-    this.activeFireball = null;
     this.activeTorch = false;
     this.lightMask = this.scene.add.graphics();
 
@@ -65,28 +63,28 @@ export default class GameController {
 
   initialize(levelId) {
     this.scene.events.once("create", () => {
-      if (this.HtmlModel.getGameModeId() != 1) {
-        if (levelId === 1) {
-          this.mysteryBox.spawn();
-          //this.obstacleModel.createLabyrinth();
-          this.drawAllObstacles();
-          console.log("Level 1 ");
-        }
-        if (levelId === 2) {
-          this.mysteryBox.spawn();
-          console.log("Level 2 ");
-        }
-        if (levelId === 3) {
-          this.mysteryBox.spawn();
-          console.log("Level 3 ");
-        }
-      } else {
+      //console.log(this.gameModeId);
+      if (this.levelId === 1) {
+        this.mysteryBox.spawn();
+        //this.obstacleModel.createLabyrinth();
+        this.drawAllObstacles();
+        console.log("Level 1 ");
+      }
+      if (this.levelId === 2) {
+        this.mysteryBox.spawn();
+        console.log("Level 2 ");
+      }
+      if (this.levelId === 3) {
+        this.mysteryBox.spawn();
+        console.log("Level 3 ");
+      }
+      if (this.levelId === 4) {
         this.obstacleModel.createLabyrinth();
         this.drawAllObstacles();
-        // TODO Labyritnh Implementation
         this.mysteryBox.spawn();
         console.log("Labyrinth Mode");
       }
+    
     });
   }
 
@@ -203,27 +201,28 @@ export default class GameController {
   }
 
   /**
-   * checkItemObstacleCollision() prüft, ob ein Item ein Hindernis berührt.
+   * checkItemObstacleCollision() prüft, ob ein Objekt ein Hindernis berührt.
    * Wenn ja, wird true zurückgegeben, ansonsten false.
    * @param {*} item 
    * @returns 
    */
-  checkItemObstacleCollision(item) {
+  checkObstacleCollision(object) {
     const obstacles = this.obstacleModel.getObstacles();
-    if(item.x === null || item.y === null) {
+    if(object.x === null || object.y === null) {
+      console.log("object is null");
       return;
     }
-    const itemPos = this.field.alignToGrid(
-      item.x,
-      item.y
+    const objectPos = this.field.alignToGrid(
+      object.x,
+      object.y
     );
 
     for (const obstacle of obstacles) {
       const obstaclePos = this.field.alignToGrid(obstacle.x, obstacle.y);
 
       if (
-        itemPos.x === obstaclePos.x &&
-        itemPos.y === obstaclePos.y
+        objectPos.x === obstaclePos.x &&
+        objectPos.y === obstaclePos.y
       ) {
         return true;
       }
@@ -308,43 +307,6 @@ export default class GameController {
   }
 
   /**
-   * prüft, ob der Feuerball ein Hindernis trifft
-   * bei einer Kollision wird der Feuerball gestoppt und das Hindernis entfernt
-   * @returns
-   */
-  checkFireBallObstacleCollision() {
-    if (this.activeFireball) {
-      console.log("active");
-      if (
-        this.activeFireball.sprite.x > this.scene.game.config.width ||
-        this.activeFireball.sprite.x < 0 ||
-        this.activeFireball.y > this.scene.game.config.height ||
-        this.activeFireball.y < 0
-      ) {
-        this.activeFireball.stopFireBall();
-        return;
-      }
-      const obstacles = this.obstacleModel.getObstacles();
-      const fireBallPos = this.field.alignToGrid(
-        this.activeFireball.x,
-        this.activeFireball.y
-      );
-      for (const obstacle of obstacles) {
-        const obstaclePos = this.field.alignToGrid(obstacle.x, obstacle.y);
-        if (
-          fireBallPos.x === obstaclePos.x &&
-          fireBallPos.y === obstaclePos.y
-        ) {
-          this.obstacleModel.removeObstacle(obstacle.x, obstacle.y);
-          this.obstacleView.removeObstacle(obstacle.x, obstacle.y);
-          this.activeFireball.stopFireBall();
-          return;
-        }
-      }
-    }
-  }
-
-  /**
    * aktualisiert den Lichteffekt, der von der Fackel erzeugt wird
    * wenn die Fackel aktiv ist, wird ein Lichteffekt um den Schlangenkopf erzeugt
    */
@@ -409,7 +371,6 @@ export default class GameController {
           this.checkSnakeObstacleCollision();
           this.checkWallCollision(this.snakeModel.snakeHead);
           this.checkSnakeMysteryBoxCollision();
-          this.checkFireBallObstacleCollision();
           this.updateLightMask();
         }
       } else if (!this.snakeModel.alive) {

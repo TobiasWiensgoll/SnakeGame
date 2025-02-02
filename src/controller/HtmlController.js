@@ -39,8 +39,8 @@ export default class HtmlController {
     const labButton = document.querySelector(".LabyrinthButton");
     if (labButton) {
       labButton.addEventListener("click", () => {
-        this.htmlModel.setLevelId(1);
-        this.htmlModel.setGameModeId(1);
+        this.htmlModel.setLevelId(4);
+
         this.startGameHandler();
       });
     }
@@ -50,6 +50,7 @@ export default class HtmlController {
     console.log("Spiel wird gestartet...");
     this.hideMenus();
     console.log(this.htmlModel.getSkinId());
+    console.log(this.htmlModel.getLevelId());
     startGame(this.htmlModel.getLevelId(), this.htmlModel.getSkinId()); // Hier wird die Methode aus gameStarter.js aufgerufen
   }
 

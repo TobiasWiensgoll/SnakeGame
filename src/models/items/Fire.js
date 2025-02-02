@@ -3,6 +3,8 @@ import Item from './Item.js';
 export default class FireItem extends Item {
   constructor(scene, field) {
     super(scene, field, 'fireball', 'powerup'); // 'fireball' ist der Schlüssel für das Feuerball-Sprite
+    this.directionX = 0;
+    this.directionY = 0;
   }
 
 
@@ -22,14 +24,27 @@ export default class FireItem extends Item {
     this.createSprite();
     this.sprite.setScale(0.5);
 
-    this.scene.controller.activeFireball = this;
-
     // Setzt den Feuerball in Bewegung in Richtung der aktuellen Schlangenrichtung
-    const velocity = 400;
-    this.sprite.setVelocity(
-      snake.direction.x * velocity,
-      snake.direction.y * velocity
-    );
+    this.directionX = snake.direction.x;
+    this.directionY = snake.direction.y;
+    this.move();
+  }
+
+  move() {
+    const speed = 30; // 10px pro Schritt
+    this.fireballInterval = setInterval(() => {
+      if (!this.scene.controller.checkObstacleCollision(this.sprite)) {
+          this.sprite.x += this.directionX * speed;
+          this.sprite.y += this.directionY * speed;
+      } else {
+          const position = this.field.alignToGrid(this.sprite.x, this.sprite.y);
+          this.stopFireBall();
+          this.scene.controller.obstacleModel.removeObstacle(position.x, position.y);
+          this.scene.controller.obstacleView.removeObstacle(position.x, position.y);
+          clearInterval(this.fireballInterval);
+      }
+    }, 70); // Alle 50ms (20 Updates pro Sekunde)
+    return true;
   }
 
   /**

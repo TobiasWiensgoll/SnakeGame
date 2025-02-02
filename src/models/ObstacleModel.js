@@ -120,6 +120,7 @@ export default class ObstacleModel {
   }
 
   removeObstacle(x, y) {
+    console.log(`Removing obstacle at (${x}, ${y})`);
     this.obstacleData = this.obstacleData.filter(obstacle => obstacle.x !== x || obstacle.y !== y);
   }
 }
