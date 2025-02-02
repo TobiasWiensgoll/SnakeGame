@@ -5,7 +5,6 @@ export default class SnakeModel {
     this.body = [];
     this.directions = [];
     this.positions = [];
-    this.score =0;
     this.lives = 1;
     this.speed = 150;
     this.moveTime = this.speed;
@@ -50,22 +49,8 @@ export default class SnakeModel {
     this.scene.physics.add.collider(this.snakeHead, newPart, this.endGame, null, this);
 
     // Punktestand erhöhen, jedes Mal wenn die Schlange wächst
-  this.addPoints(10); // 10 Punkte für jedes Wachsen der Schlange, du kannst das anpassen
+    this.scene.controller.addPoints(10); // 10 Punkte für jedes Wachsen der Schlange, du kannst das anpassen
 
-  }
-
-  doublePoints(isActive) {
-    this.isDoublePointsActive = isActive;
-  }
-
-  addPoints(amount) {
-
-    if (this.isDoublePointsActive) {
-      amount *= 2; // Verdoppelt die Punkte
-    }
-
-    this.score += amount; // Punktestand erhöhen
-    console.log('Score:', this.score); // Optional: Ausgabe des Punktestands im Konsolenlog
   }
 
   // Setzt die Geschwindigkeit der Schlange
@@ -76,10 +61,6 @@ export default class SnakeModel {
   // Gibt die aktuelle Geschwindigkeit der Schlange zurück
   getSpeed() {
     return this.speed;
-  }
-
-  getScore(){
-    return this.score;
   }
     
     // Bewegt den Schlangenkopf in die aktuelle Richtung und aktualisiert die Positionen der Körpersegmente,

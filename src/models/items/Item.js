@@ -22,6 +22,7 @@ export default class Item {
         this.y = position.y
       }
       this.createSprite();
+      this.sprite.setDepth(2);
     }
 
     /**
@@ -83,6 +84,7 @@ export default class Item {
         run: () => {
     
           const img = this.scene.add.sprite(this.scene.sys.canvas.width/2, this.scene.sys.canvas.height/2, this.name); 
+          img.setDepth(3);
         
           // Füge den ersten Tween mit einer Verzögerung hinzu
           this.scene.tweens.add({

@@ -58,6 +58,7 @@ import tailLeftp from "../assets/snake/pink/tail_left.png";
 import tailUpp from "../assets/snake/pink/tail_up.png";
 import tailDownp from "../assets/snake/pink/tail_down.png";
 
+import portalImg from "../assets/images/portal.png";
 // Mysterybox-Bild importieren
 import mysteryBoxImg from "../assets/images/items/mysteryBox.png";
 // Handicap-Bilder importieren
@@ -155,6 +156,7 @@ export default class Game extends Phaser.Scene {
 
     // ****************************** Item-Bilder ******************************
     this.load.image("mysteryBox", mysteryBoxImg);
+    this.load.image("portal", portalImg);
     // Powerup-Bilder
     this.load.image("fire", fireImg);
     this.load.image("fireball", fireBallImg);
@@ -171,12 +173,15 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
-    this.controller = new GameController(this, this.levelId);
+    this.controller = new GameController(this, this.levelId, this.skinId);
     // Add countdown text
     this.countdownText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, '', {
-      fontSize: '128px',
+      fontSize: '256px',
+      fontStyle: 'bold',
+      fontFamily: 'Berkshire Swash',
       fill: '#ffffff'
     }).setOrigin(0.5);
+    this.countdownText.setDepth(3);
 
     // Start countdown
     this.startCountdown(3); // 3 seconds countdown

@@ -13,12 +13,15 @@ import ItemDisplayView from "../views/ItemDisplayView.js";
 import HtmlController from "./HtmlController.js";
 import HtmlModel from "../models/HtmlModel.js";
 import Item from "../models/items/Item.js";
+import { startGame } from "../main.js";
+import Portal from "../models/Portal.js";
 
 export default class GameController {
-  constructor(scene, levelId) {
+  constructor(scene, levelId, skinId) {
     // Szene und Spielfeld erstellen
     this.scene = scene;
     this.levelId = levelId;
+    this.skinId = skinId;
     let bg = this.scene.add.image(0, 0, "dungeon_background");
     bg.displayWidth = this.scene.sys.canvas.width;
     bg.displayHeight = this.scene.sys.canvas.height;
@@ -29,6 +32,9 @@ export default class GameController {
     this.snakeModel = new SnakeModel(scene, this.field);
     this.snakeView = new SnakeView(scene, this.snakeModel);
 
+    this.score = 0;
+    this.isDoublePointsActive = false;
+
     // Food-Model und -View erstellen
     this.foodModel = new Food(scene, this.field);
     this.foodView = new FoodView(scene, this.foodModel);
@@ -37,13 +43,15 @@ export default class GameController {
     this.obstacleModel = new ObstacleModel(scene, this.field);
     this.obstacleView = new ObstacleView(scene);
 
+    this.portal = new Portal(scene, this.field);
+
     // Mysterybox-Setup
     this.activeItems = [];
     this.currentActiveItem = false;
     this.mysteryBox = new MysteryBox(scene, this.field);
-    this.activeFireball = null;
     this.activeTorch = false;
     this.lightMask = this.scene.add.graphics();
+    this.lightMask.setDepth(1);
 
     // Item-Display erstellen
     this.itemDisplayView = new ItemDisplayView(scene);
@@ -59,42 +67,54 @@ export default class GameController {
     // Bewegung Setup
     this.keyLock = false; // Sperrt Tasteneingaben, um schnelle Richtungswechsel zu verhindern
     this.moveEvents = []; // Sammlung von Eingaben für Bewegungen
-    this.initialize(levelId);
+    this.initialize();
   }
 
-  initialize(levelId) {
+  /**
+   * initialize() wird aufgerufen, sobald die Szene erstellt wurde.
+   * Hier wird das Level initialisiert und die Hindernisse, Nahrung und Mysteryboxen erstellt.
+   * 
+   */
+  initialize() {
     this.scene.events.once("create", () => {
-        if (levelId === 1) {
-          console.log("Level 1 ");
-          this.obstacleModel.setLevel(1)
-          this.obstacleModel.createRandomObstacles();
-          this.drawAllObstacles();
-          this.mysteryBox.spawn();
-        }
-        if (levelId === 2) {
-          this.obstacleModel.setLevel(2)
-          this.obstacleModel.createRandomObstacles();
-          this.drawAllObstacles();
-          this.mysteryBox.spawn();
-          console.log("Level 2 ");
-        }
-        if (levelId === 3) {
-          this.obstacleModel.setLevel(3)
-          this.obstacleModel.createRandomObstacles();
-          this.drawAllObstacles();
-          this.mysteryBox.spawn();
-          console.log("Level 3 ");
-        }
-        if (levelId === 4) {
-          this.obstacleModel.createLabyrinth();
-          this.drawAllObstacles();
-          this.mysteryBox.spawn();
-          console.log("Labyrinth ");
-        }
+      if (this.levelId === 1) {
+        console.log("Level 1 ");
+        this.obstacleModel.setLevel(1)
+        this.obstacleModel.createRandomObstacles();
+        this.drawAllObstacles();
+        this.mysteryBox.spawn();
+        this.foodModel.respawn();
       }
-    );
+      if (this.levelId === 2) {
+        console.log("Level 2 ");
+        this.obstacleModel.setLevel(2)
+        this.obstacleModel.createRandomObstacles();
+        this.drawAllObstacles();
+        this.mysteryBox.spawn();
+        this.foodModel.respawn();
+      }
+      if (this.levelId === 3) {
+        console.log("Level 3 ");
+        this.obstacleModel.setLevel(3)
+        this.obstacleModel.createRandomObstacles();
+        this.drawAllObstacles();
+        this.mysteryBox.spawn();
+        this.foodModel.respawn();
+      }
+      if (this.levelId === 4) {
+        console.log("Labyrinth ");
+        this.obstacleModel.createLabyrinth();
+        this.drawAllObstacles();
+        this.mysteryBox.spawn();
+        this.foodModel.respawn();
+        this.snakeModel.lives = 3;
+      }
+    });
   }
 
+  /**
+   * drawAllObstacles() zeichnet alle Hindernisse auf dem Spielfeld.
+   */
   drawAllObstacles() {
     this.obstacleModel.createRandomObstacles;
     const obstacleData = this.obstacleModel.getObstacles();
@@ -208,7 +228,7 @@ export default class GameController {
   }
 
   /**
-   * checkItemObstacleCollision() prüft, ob ein Item ein Hindernis berührt.
+   * checkObstacleCollision() prüft, ob ein Objekt ein Hindernis berührt.
    * Wenn ja, wird true zurückgegeben, ansonsten false.
    * @param {*} item 
    * @returns 
@@ -217,23 +237,25 @@ export default class GameController {
     const obstacles = this.obstacleModel.getObstacles();
     if(object.x === null || object.y === null) {
       console.log("object is null");
-      return;}
+      return;
+    }
     const objectPos = this.field.alignToGrid(
       object.x,
-      object.y);
-  
-      for (const obstacle of obstacles) {
-        const obstaclePos = this.field.alignToGrid(obstacle.x, obstacle.y);
-  
-        if (
-          objectPos.x === obstaclePos.x &&
-          objectPos.y === obstaclePos.y
-        ) {
-          return true;
-        }
+      object.y
+    );
+
+    for (const obstacle of obstacles) {
+      const obstaclePos = this.field.alignToGrid(obstacle.x, obstacle.y);
+
+      if (
+        objectPos.x === obstaclePos.x &&
+        objectPos.y === obstaclePos.y
+      ) {
+        return true;
       }
-      return false;
     }
+    return false;
+  }
 
   /**
    * checkSnakeFoodCollision() prüft, ob der Schlangenkopf die Nahrung berührt.
@@ -286,6 +308,29 @@ export default class GameController {
     }
   }
 
+  /**
+   * checkPortalCollision() prüft, ob der Schlangenkopf das Portal berührt.
+   * Wenn ja, wird das aktuelle Level beendet und das nächste Level gestartet.
+   * @returns 
+   */
+  checkPortalCollision() {
+    if(!this.portal.sprite){
+      return;
+    }
+    if (
+      this.snakeModel.snakeHead.x === this.portal.sprite.x &&
+      this.snakeModel.snakeHead.y === this.portal.sprite.y
+    ) {
+      this.snakeModel.alive = false;
+      this.portal.destroy();
+      if(this.levelId < 4){
+        startGame(this.levelId + 1, this.skinId);
+      } else {
+        startGame(1, this.skinId);
+      }
+    }
+  }
+
   // *********************************** ITEMS COLLISIONS ***********************************
 
   /**
@@ -309,43 +354,6 @@ export default class GameController {
       );
     }
     return false;
-  }
-
-  /**
-   * prüft, ob der Feuerball ein Hindernis trifft
-   * bei einer Kollision wird der Feuerball gestoppt und das Hindernis entfernt
-   * @returns
-   */
-  checkFireBallObstacleCollision() {
-    if (this.activeFireball) {
-      console.log("active");
-      if (
-        this.activeFireball.sprite.x > this.scene.game.config.width ||
-        this.activeFireball.sprite.x < 0 ||
-        this.activeFireball.y > this.scene.game.config.height ||
-        this.activeFireball.y < 0
-      ) {
-        this.activeFireball.stopFireBall();
-        return;
-      }
-      const obstacles = this.obstacleModel.getObstacles();
-      const fireBallPos = this.field.alignToGrid(
-        this.activeFireball.x,
-        this.activeFireball.y
-      );
-      for (const obstacle of obstacles) {
-        const obstaclePos = this.field.alignToGrid(obstacle.x, obstacle.y);
-        if (
-          fireBallPos.x === obstaclePos.x &&
-          fireBallPos.y === obstaclePos.y
-        ) {
-          this.obstacleModel.removeObstacle(obstacle.x, obstacle.y);
-          this.obstacleView.removeObstacle(obstacle.x, obstacle.y);
-          this.activeFireball.stopFireBall();
-          return;
-        }
-      }
-    }
   }
 
   /**
@@ -376,7 +384,32 @@ export default class GameController {
     }
   }
 
-  // ****************************************************************************************
+  // *********************************** GAME LOGIC ***********************************
+
+  /**
+   * doublePoints() aktiviert oder deaktiviert den Punktemultiplikator.
+   * @param {*} isActive 
+   */
+  doublePoints(isActive) {
+    this.isDoublePointsActive = isActive;
+  }
+
+  /**
+   * addPoints() erhöht den Punktestand um den übergebenen Betrag.
+   * @param {*} amount 
+   */
+  addPoints(amount) {
+    if (this.isDoublePointsActive) {
+      amount *= 2; // Verdoppelt die Punkte
+    }
+
+    this.score += amount; // Punktestand erhöhen
+    console.log('Score:', this.score); // Optional: Ausgabe des Punktestands im Konsolenlog
+  }
+
+  getScore(){
+    return this.score;
+  }
 
   /**
    * endGame() markiert die Schlange als tot
@@ -384,8 +417,8 @@ export default class GameController {
   endGame() {
     console.log("Endgame");
     this.snakeModel.alive = false;
-    console.log("getscore " + this.snakeModel.getScore());
-    this.HtmlModel.setKronen(this.snakeModel.getScore());
+    console.log("getscore " + this.getScore());
+    this.HtmlModel.setKronen(this.getScore());
     this.HtmlController.handleDeath();
   }
 
@@ -396,6 +429,9 @@ export default class GameController {
    * @param {*} time
    */
   update(time) {
+    if(this.score >= 30 && !this.portal.sprite){
+      this.portal.spawn();
+    }
     this.handleInput();
     this.handleItemActivation();
     if (time >= this.snakeModel.moveTime && this.snakeModel.alive) {
@@ -413,8 +449,8 @@ export default class GameController {
           this.checkSnakeObstacleCollision();
           this.checkWallCollision(this.snakeModel.snakeHead);
           this.checkSnakeMysteryBoxCollision();
-          this.checkFireBallObstacleCollision();
           this.updateLightMask();
+          this.checkPortalCollision();
         }
       } else if (!this.snakeModel.alive) {
         this.endGame();
