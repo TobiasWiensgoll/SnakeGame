@@ -26,6 +26,7 @@ function swapImages(clickedItem) {
 function toggleMenus() {
   const menuContainer = document.querySelector(".MenuContainer");
   const menuContainer2 = document.querySelector(".MenuContainer2");
+  const menuContainer3 = document.querySelector(".MenuContainer3");
 
   if (menuContainer && menuContainer2) {
     // Level Button Event Listener
@@ -43,6 +44,22 @@ function toggleMenus() {
       backButton.addEventListener("click", () => {
         menuContainer.style.display = "flex";
         menuContainer2.style.display = "none";
+      });
+    }
+    // Back Button Event Listener
+    const backButton2 = document.getElementById("backButton2");
+    if (backButton2) {
+      backButton2.addEventListener("click", () => {
+        menuContainer.style.display = "flex";
+        menuContainer3.style.display = "none";
+      });
+    }
+    const creditsButton = document.querySelector(".creditsButton");
+    if (creditsButton) {
+      creditsButton.addEventListener("click", () => {
+        menuContainer.style.display = "none";
+        menuContainer2.style.display = "none";
+        menuContainer3.style.display = "flex";
       });
     }
   }

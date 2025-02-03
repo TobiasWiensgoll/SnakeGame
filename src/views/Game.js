@@ -1,8 +1,12 @@
 import GameController from "../controller/GameController.js";
 
-// Food / Obstacles importieren
+// Food / Obstacles importieren / background
 import dungeonBackgroundImage from "../assets/images/dungeon_background.jpg";
+import dungeonBackgroundImage2 from "../assets/images/forest_background.png";
+import dungeonBackgroundImage3 from "../assets/images/sky_background.gif";
 import obstacleBrickImage from "../assets/images/obstacle_brick.png";
+import obstacleLeafImage from "../assets/images/obstacle_leaf.png";
+import obstacleCloudImage from "../assets/images/obstacle_cloud.png";
 import appleImage from "../assets/images/apple.png";
 import foodImage from "../assets/images/food.png";
 
@@ -54,12 +58,13 @@ import tailLeftp from "../assets/snake/pink/tail_left.png";
 import tailUpp from "../assets/snake/pink/tail_up.png";
 import tailDownp from "../assets/snake/pink/tail_down.png";
 
+import portalImg from "../assets/images/portal.png";
 // Mysterybox-Bild importieren
-import mysteryBoxImg from '../assets/images/items/mysteryBox.png'
+import mysteryBoxImg from "../assets/images/items/mysteryBox.png";
 // Handicap-Bilder importieren
-import flashlightImg from '../assets/images/items/handicaps/flashlight.png';
-import lightMaskImg from '../assets/images/light_mask.png';
-import growthImg from '../assets/images/items/handicaps/growth.png';
+import flashlightImg from "../assets/images/items/handicaps/flashlight.png";
+import lightMaskImg from "../assets/images/light_mask.png";
+import growthImg from "../assets/images/items/handicaps/growth.png";
 import reverseImg from "../assets/images/items/handicaps/reverse.png";
 import speedImg from "../assets/images/items/handicaps/speed.png";
 // Powerup-Bilder importieren
@@ -80,12 +85,29 @@ export default class Game extends Phaser.Scene {
     this.skinId = skinId;
   }
 
+  constructor(levelId, skinId) {
+    super("game");
+    this.levelId = levelId;
+    this.skinId = skinId;
+  }
+
   preload() {
     // ****************************** Food / Obstacles ******************************
     this.load.image("apple", appleImage);
     this.load.image("food", foodImage);
-    this.load.image("dungeon_background", dungeonBackgroundImage);
     this.load.image("obstacle_brick", obstacleBrickImage);
+    this.load.image("obstacle_leaf", obstacleLeafImage);
+    this.load.image("obstacle_cloud", obstacleCloudImage);
+    //Background
+    if (this.levelId === 1 || this.levelId === 4) {
+      this.load.image("dungeon_background", dungeonBackgroundImage);
+    }
+    if (this.levelId === 2) {
+      this.load.image("dungeon_background", dungeonBackgroundImage2);
+    }
+    if (this.levelId === 3) {
+      this.load.image("dungeon_background", dungeonBackgroundImage3);
+    }
 
     // ****************************** Snake-Bilder ******************************
     if (this.skinId === 1) {
@@ -140,6 +162,7 @@ export default class Game extends Phaser.Scene {
 
     // ****************************** Item-Bilder ******************************
     this.load.image("mysteryBox", mysteryBoxImg);
+    this.load.image("portal", portalImg);
     // Powerup-Bilder
     this.load.image("fire", fireImg);
     this.load.image("fireball", fireBallImg);
@@ -156,10 +179,48 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
-    this.controller = new GameController(this, this.levelId);
+    this.controller = new GameController(this, this.levelId, this.skinId);
+    // Add countdown text
+    this.countdownText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY, '', {
+      fontSize: '256px',
+      fontStyle: 'bold',
+      fontFamily: 'Berkshire Swash',
+      fill: '#ffffff'
+    }).setOrigin(0.5);
+    this.countdownText.setDepth(3);
+
+    // Start countdown
+    this.startCountdown(3); // 3 seconds countdown
+  }
+
+  startCountdown(seconds) {
+    this.countdown = seconds;
+    this.updateCountdownText();
+
+    this.time.addEvent({
+      delay: 1000,
+      callback: this.updateCountdown,
+      callbackScope: this,
+      repeat: seconds - 1
+    });
+  }
+
+  updateCountdown() {
+    this.countdown--;
+    this.updateCountdownText();
+
+    if (this.countdown <= 0) {
+      this.countdownText.setVisible(false);
+    }
+  }
+
+  updateCountdownText() {
+    this.countdownText.setText(this.countdown);
   }
 
   update(time) {
-    this.controller.update(time);
+    if (this.controller && this.countdown <= 0) {
+      this.controller.update(time);
+    }
   }
 }

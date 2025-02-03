@@ -13,10 +13,16 @@ export default class Item {
      * Erstellt ein Item an einer zufälligen Position auf dem Spielfeld
      */
     spawn() {
-      const position = this.field.getRandomPosition();
+      var position = this.field.getRandomPosition();
       this.x = position.x;
       this.y = position.y;
+      while(this.scene.controller.checkObstacleCollision(this)) {
+        position = this.field.getRandomPosition();
+        this.x = position.x;
+        this.y = position.y
+      }
       this.createSprite();
+      this.sprite.setDepth(2);
     }
 
     /**
@@ -24,10 +30,7 @@ export default class Item {
      */
     respawn() {
       this.destroy();
-      const position = this.field.getRandomPosition();
-      this.x = position.x;
-      this.y = position.y;
-      this.createSprite();
+      this.spawn();
     }
 
     onAction() {return}
@@ -81,6 +84,7 @@ export default class Item {
         run: () => {
     
           const img = this.scene.add.sprite(this.scene.sys.canvas.width/2, this.scene.sys.canvas.height/2, this.name); 
+          img.setDepth(3);
         
           // Füge den ersten Tween mit einer Verzögerung hinzu
           this.scene.tweens.add({
