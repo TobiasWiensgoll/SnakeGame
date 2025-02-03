@@ -9,6 +9,7 @@ export default class HtmlController {
     const startButton = document.getElementById("startButton");
     if (startButton) {
       startButton.addEventListener("click", () => {
+        this.htmlModel.setLevelId(1);
         this.startGameHandler();
       });
     }
