@@ -17,7 +17,7 @@ export default class Multiplikator extends Item {
       this.scene.time.addEvent({
         delay: 15000, // Dauer des Punktmultiplikators in Millisekunden (15 Sekunden)
         callback: () => {
-          snake.doublePoints(false); 
+          this.scene.controller.doublePoints(false); 
         },
       });
     }
