@@ -85,6 +85,12 @@ export default class Game extends Phaser.Scene {
     this.skinId = skinId;
   }
 
+  constructor(levelId, skinId) {
+    super("game");
+    this.levelId = levelId;
+    this.skinId = skinId;
+  }
+
   preload() {
     // ****************************** Food / Obstacles ******************************
     this.load.image("apple", appleImage);

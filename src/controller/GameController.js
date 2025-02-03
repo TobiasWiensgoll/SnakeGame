@@ -29,6 +29,8 @@ export default class GameController {
     this.field = new Field(scene, scene.scale.width, scene.scale.height, 40);
 
     // Schlange erstellen
+
+    // Schlange erstellen
     this.snakeModel = new SnakeModel(scene, this.field);
     this.snakeView = new SnakeView(scene, this.snakeModel);
 
@@ -38,6 +40,8 @@ export default class GameController {
     // Food-Model und -View erstellen
     this.foodModel = new Food(scene, this.field);
     this.foodView = new FoodView(scene, this.foodModel);
+
+    // Obstacle-Model und -View erstellen
 
     // Obstacle-Model und -View erstellen
     this.obstacleModel = new ObstacleModel(scene, this.field);
@@ -63,7 +67,13 @@ export default class GameController {
 
     // Flags erstellen
     this.disableCollisions = false; // Flag zum Deaktivieren der Kollisionen
+    this.HtmlModel = new HtmlModel("Wilkommen", 0);
+    this.HtmlController = new HtmlController(this.HtmlModel);
 
+    // Flags erstellen
+    this.disableCollisions = false; // Flag zum Deaktivieren der Kollisionen
+
+    // Bewegung Setup
     // Bewegung Setup
     this.keyLock = false; // Sperrt Tasteneingaben, um schnelle Richtungswechsel zu verhindern
     this.moveEvents = []; // Sammlung von Eingaben für Bewegungen
@@ -278,6 +288,10 @@ export default class GameController {
    * checkSelfCollision() prüft, ob der Schlangenkopf mit einem Körpersegment kollidiert.
    * Falls eine Kollision festgestellt wird, wird die Schlange als tot markiert.
    */
+  /**
+   * checkSelfCollision() prüft, ob der Schlangenkopf mit einem Körpersegment kollidiert.
+   * Falls eine Kollision festgestellt wird, wird die Schlange als tot markiert.
+   */
   checkSelfCollision() {
     if (!this.disableCollisions) {
       for (let i = 1; i < this.snakeModel.body.length; i++) {
@@ -434,6 +448,7 @@ export default class GameController {
       this.portal.spawn();
     }
     this.handleInput();
+    this.handleItemActivation();
     this.handleItemActivation();
     if (time >= this.snakeModel.moveTime && this.snakeModel.alive) {
       this.keyLock = false;
