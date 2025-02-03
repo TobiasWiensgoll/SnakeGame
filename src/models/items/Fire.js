@@ -27,25 +27,29 @@ export default class FireItem extends Item {
     // Setzt den Feuerball in Bewegung in Richtung der aktuellen Schlangenrichtung
     this.directionX = snake.direction.x;
     this.directionY = snake.direction.y;
-    this.move();
+    this.shootFireball();
   }
 
-  move() {
-    const speed = 30; // 10px pro Schritt
+  shootFireball() {
+    const speed = 30; 
     this.fireballInterval = setInterval(() => {
-      if (!this.scene.controller.checkObstacleCollision(this.sprite)) {
-          this.sprite.x += this.directionX * speed;
-          this.sprite.y += this.directionY * speed;
-      } else {
-          const position = this.field.alignToGrid(this.sprite.x, this.sprite.y);
-          this.stopFireBall();
-          this.scene.controller.obstacleModel.removeObstacle(position.x, position.y);
-          this.scene.controller.obstacleView.removeObstacle(position.x, position.y);
-          this.scene.controller.addPoints(5);
-          clearInterval(this.fireballInterval);
-      }
-    }, 70); // Alle 50ms (20 Updates pro Sekunde)
+      this.handleCollision();
+      this.sprite.x += this.directionX * speed;
+      this.sprite.y += this.directionY * speed;
+    }, 70); 
     return true;
+  }
+
+  handleCollision() {
+    if (this.scene.controller.checkObstacleCollision(this.sprite)) {
+      const position = this.field.alignToGrid(this.sprite.x, this.sprite.y);
+      this.stopFireBall();
+      this.scene.controller.obstacleModel.removeObstacle(position.x, position.y);
+      this.scene.controller.obstacleView.removeObstacle(position.x, position.y);
+      this.scene.controller.addPoints(5);
+      clearInterval(this.fireballInterval); 
+    }
+    
   }
 
   /**
