@@ -79,11 +79,6 @@ import Phaser from "phaser";
 import ObstacleModel from "../models/ObstacleModel.js";
 
 export default class Game extends Phaser.Scene {
-  constructor(levelId, skinId) {
-    super("game");
-    this.levelId = levelId;
-    this.skinId = skinId;
-  }
 
   constructor(levelId, skinId) {
     super("game");

@@ -12,8 +12,8 @@ export default class Multiplikator extends Item {
    */
   onAction(snake) {
     this.createItemAnimation();
-    if (snake.doublePoints) {
-      snake.doublePoints(true); 
+    if (!this.scene.controller.isDoublePointsActive) {
+      this.scene.controller.doublePoints(true); 
       this.scene.time.addEvent({
         delay: 15000, // Dauer des Punktmultiplikators in Millisekunden (15 Sekunden)
         callback: () => {

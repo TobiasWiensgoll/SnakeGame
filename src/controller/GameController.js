@@ -29,8 +29,6 @@ export default class GameController {
     this.field = new Field(scene, scene.scale.width, scene.scale.height, 40);
 
     // Schlange erstellen
-
-    // Schlange erstellen
     this.snakeModel = new SnakeModel(scene, this.field);
     this.snakeView = new SnakeView(scene, this.snakeModel);
 
@@ -40,8 +38,6 @@ export default class GameController {
     // Food-Model und -View erstellen
     this.foodModel = new Food(scene, this.field);
     this.foodView = new FoodView(scene, this.foodModel);
-
-    // Obstacle-Model und -View erstellen
 
     // Obstacle-Model und -View erstellen
     this.obstacleModel = new ObstacleModel(scene, this.field);
@@ -70,10 +66,6 @@ export default class GameController {
     this.HtmlModel = new HtmlModel("Wilkommen", 0);
     this.HtmlController = new HtmlController(this.HtmlModel);
 
-    // Flags erstellen
-    this.disableCollisions = false; // Flag zum Deaktivieren der Kollisionen
-
-    // Bewegung Setup
     // Bewegung Setup
     this.keyLock = false; // Sperrt Tasteneingaben, um schnelle Richtungswechsel zu verhindern
     this.moveEvents = []; // Sammlung von Eingaben für Bewegungen
@@ -414,12 +406,13 @@ export default class GameController {
    * @param {*} amount 
    */
   addPoints(amount) {
+    console.log(this.isDoublePointsActive);
     if (this.isDoublePointsActive) {
       amount *= 2; // Verdoppelt die Punkte
     }
 
     this.score += amount; // Punktestand erhöhen
-    console.log('Score:', this.score); // Optional: Ausgabe des Punktestands im Konsolenlog
+    console.log('Score:', this.score); 
   }
 
   getScore(){
