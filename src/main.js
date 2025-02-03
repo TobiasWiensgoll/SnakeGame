@@ -17,18 +17,27 @@ const config = {
   },
 };
 
-// Funktion zum Starten des Spiels
+let gameIsRunning = false; // Verhindert doppelten Start
+
 export function startGame(levelId, skinId) {
-  // Wenn ein Spiel bereits läuft, stoppen wir es
+  if (gameIsRunning) return; // Falls das Spiel schon läuft, tue nichts
+  gameIsRunning = true; // Blockiere weitere Starts, bis das Spiel läuft
+
   if (currentGame) {
-    currentGame.destroy(true); // Zerstöre das aktuelle Spiel, um Ressourcen freizugeben
+    currentGame.destroy(true, false);
+    document.querySelector("canvas")?.remove();
+    currentGame = null;
   }
 
-  // Erstelle das neue Spiel
-  currentGame = new Phaser.Game(config);
-  currentGame.scene.add("game", new Game(levelId, skinId)); // Übergebe die Parameter an den Konstruktor der Game-Klasse
-  currentGame.scene.start("game");
+  setTimeout(() => {
+    currentGame = new Phaser.Game(config);
+    currentGame.scene.add("game", new Game(levelId, skinId));
+    currentGame.scene.start("game");
+
+    gameIsRunning = false; // Nach dem Start wieder freigeben
+  }, 100);
 }
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const htmlModel = new HtmlModel("Willkommen", 0);
